@@ -7,10 +7,11 @@ public class MainActivity extends AppCompatActivity {
     private double wage;
 
     private float totalOwed;
+    private float paid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-}
+}   
