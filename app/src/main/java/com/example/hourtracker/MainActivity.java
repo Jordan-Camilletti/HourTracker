@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
     private double wage;
+
     private float totalOwed;
 
     @Override
