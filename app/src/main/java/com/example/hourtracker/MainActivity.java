@@ -9,7 +9,11 @@ public class MainActivity extends AppCompatActivity{
     private ConstraintLayout activity_main;
     private Button addButton;
 
+    private String[] dates;
+    private float[] dayHours;
+    private float[] dayTimes;
     private double wage;
+    private float totalHours;
     private float totalOwed;
     private float paid;
 
