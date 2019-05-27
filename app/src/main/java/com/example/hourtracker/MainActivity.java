@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private float totalOwed;
     private float paid;
 
-    private StringBuilder daysString(String[] days,float[] hours){
+    private StringBuilder daysString(String[] days,float[] hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
         for(int n=0;n<hours.length;n+=2){
             rtn.append(hours[n]).append("\t");
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         return(rtn);
     }
 
-    private StringBuilder wagesString(float totHours,double wage){
+    private StringBuilder wagesString(float totHours,double wage){//Outputs the total owed hours and $ owed
         StringBuilder rtn=new StringBuilder("Hours \t\t Owed");
         rtn.append(totHours).append("\t\t");
         rtn.append(totHours*wage);
