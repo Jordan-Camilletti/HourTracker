@@ -9,7 +9,6 @@ public class MainActivity extends AppCompatActivity{
     private ConstraintLayout activity_main;
     private Button addButton;
 
-    private String[] dates;
     private float[] dayHours;
     private float[] dayTimes;
     private double wage;
@@ -17,9 +16,13 @@ public class MainActivity extends AppCompatActivity{
     private float totalOwed;
     private float paid;
 
+    private String daysString(float[] hours,float[] times){
+        return("");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-}   
+}
