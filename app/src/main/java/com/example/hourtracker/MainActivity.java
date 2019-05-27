@@ -19,7 +19,12 @@ public class MainActivity extends AppCompatActivity{
     private StringBuilder daysString(float[] hours,float[] times){
         StringBuilder rtn=new StringBuilder();
         for(int n=0;n<hours.length;n+=2){
-            rtn.append(hours[n]+"\t"+hours[n+1]+"\t"+times[n/2]+"\n");
+            rtn.append(hours[n]);
+            rtn.append("\t");
+            rtn.append(hours[n+1]);
+            rtn.append("\t");
+            rtn.append(times[n/2]);
+            rtn.append("\n");
         }
         return(rtn);
     }
