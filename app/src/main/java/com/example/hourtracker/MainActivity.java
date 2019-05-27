@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private StringBuilder wagesString(float totHours,double wage){
-        StringBuilder rtn=new StringBuilder();
+        StringBuilder rtn=new StringBuilder("Hours \t\t Owed");
+        rtn.append(totHours).append("\t\t");
+        rtn.append(totHours*wage);
         return(rtn);
     }
 
