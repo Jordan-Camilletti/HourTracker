@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
     private TextView hoursOutput;//Output of hours worked and their days
+    private TextView wageOutput;//Output of total owed
     private Button addButton;
 
     private String[] days;//Days worked
@@ -42,5 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         hoursOutput=findViewById(R.id.hoursOutput);
+        wageOutput=findViewById(R.id.wagesOutput);
     }
 }
