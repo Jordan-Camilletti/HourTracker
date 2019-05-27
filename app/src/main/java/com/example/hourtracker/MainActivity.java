@@ -16,8 +16,12 @@ public class MainActivity extends AppCompatActivity{
     private float totalOwed;
     private float paid;
 
-    private String daysString(float[] hours,float[] times){
-        return("");
+    private StringBuilder daysString(float[] hours,float[] times){
+        StringBuilder rtn=new StringBuilder();
+        for(int n=0;n<hours.length;n+=2){
+            rtn.append(hours[n]+"\t"+hours[n+1]+"\t"+times[n/2]+"\n");
+        }
+        return(rtn);
     }
 
     @Override
