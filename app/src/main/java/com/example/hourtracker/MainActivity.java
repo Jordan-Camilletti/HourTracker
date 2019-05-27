@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView hoursOutput;//Output of hours worked and their days
     private Button addButton;
 
-    private float[] days;//Days worked
+    private String[] days;//Days worked
     private float[] dayHours;//Hours worked per day
     private final double wage=12.50;//Wage I'm paid
     private float totalHours;//What I'm owed
@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
             rtn.append(hours[n+1]-hours[n]).append("\t");
             rtn.append(days[n/2]).append("\n");
         }
+        return(rtn);
+    }
+
+    private StringBuilder wagesString(float totHours,double wage){
+        StringBuilder rtn=new StringBuilder();
         return(rtn);
     }
 
