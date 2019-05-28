@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //TODO: Have days, dayHours, and wage read/write to a file
+//TODO: Create system for removing hours
+//TODO: setup 2nd screen for changing wage, seeing hours, etc
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
     private TextView hoursOutput;//Output of hours worked and their days
