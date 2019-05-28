@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+//TODO: Have days, dayHours, and wage read/write to a file
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
     private TextView hoursOutput;//Output of hours worked and their days
