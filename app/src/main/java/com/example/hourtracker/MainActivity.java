@@ -47,5 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         hoursOutput=findViewById(R.id.hoursOutput);
         wageOutput=findViewById(R.id.wagesOutput);
+        addButton=findViewById(R.id.addButton);
     }
 }
