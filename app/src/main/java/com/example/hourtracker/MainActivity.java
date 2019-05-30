@@ -3,6 +3,7 @@ package com.example.hourtracker;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -49,5 +50,12 @@ public class MainActivity extends AppCompatActivity {
         wageOutput=findViewById(R.id.wagesOutput);
         addButton=findViewById(R.id.addButton);
         //TODO: add function for addButton click
+
+        addButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
     }
 }
