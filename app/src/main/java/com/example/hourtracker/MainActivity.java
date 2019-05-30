@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //TODO: Have days, dayHours, and wage read/write to a file
+//https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
 //TODO: Create system for removing hours
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
 public class MainActivity extends AppCompatActivity {
@@ -49,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
         hoursOutput=findViewById(R.id.hoursOutput);
         wageOutput=findViewById(R.id.wagesOutput);
         addButton=findViewById(R.id.addButton);
-        //TODO: add function for addButton click
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                //TODO: add function for addButton click
             }
         });
     }
