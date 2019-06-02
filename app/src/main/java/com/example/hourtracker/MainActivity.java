@@ -14,9 +14,8 @@ import android.widget.TextView;
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
-    private TextView hoursOutput;//Output of hours worked and their days
-    private TextView wageOutput;//Output of total owed
     private Button addButton;
+    private Button removeButton;
 
     private String[] days;//Days worked
     private float[] dayHours;//Hours worked per day
@@ -48,14 +47,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        hoursOutput=findViewById(R.id.hoursOutput);
-        wageOutput=findViewById(R.id.wagesOutput);
         addButton=findViewById(R.id.addButton);
+        removeButton=findViewById(R.id.removeButton);
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //TODO: add function for addButton click
+            }
+        });
+
+        removeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //TODO: add function for removeButton click
             }
         });
     }
