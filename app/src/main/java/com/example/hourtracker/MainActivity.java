@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.util.Arrays;
+
 //TODO: Have days, dayHours, and wage read/write to a file
 //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
 //https://stackoverflow.com/questions/30417810/reading-from-a-text-file-in-android-studio-java Reading
@@ -18,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
     private Button addButton;
     private Button removeButton;
     private TextView wageText;
+    private TextView totHourText;
 
     private String[] days;//Days worked
-    private float[] dayHours;//Hours worked per day
+    private float[] hours={};//Hours worked per day
     private final double wage=12.50;//Wage I'm paid
     private float totalHours;//What I'm owed
     private float totalOwed;
@@ -44,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         return(rtn);
     }
 
+    private float getTotalHours(float[] hours){
+        float sum=0;
+        for(float h:hours){
+            sum+=h;
+        }
+        return(sum);
+    }
+
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -53,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         addButton=findViewById(R.id.addButton);
         removeButton=findViewById(R.id.removeButton);
         wageText=findViewById(R.id.wageText);
-        wageText.setText(String.format("Wage:\n%.2f",wage));
+        totHourText=findViewById(R.id.totHourText);
+        wageText.setText(String.format("Wage:\n%.2f", wage));
+        totHourText.setText(String.format("Total Hours:\n%.1f", getTotalHours(hours)));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
