@@ -22,7 +22,6 @@ import java.util.Arrays;
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
-    //private Resources res=getResources();
     private ConstraintLayout activity_main;
     private Button addButton;
     private Button removeButton;
