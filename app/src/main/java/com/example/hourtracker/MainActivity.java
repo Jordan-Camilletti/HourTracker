@@ -23,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private Button removeButton;
     private TextView wageText;
     private TextView totHourText;
+    private TextView totOwedText;
 
     private String[] days;//Days worked
-    private float[] hours={};//Hours worked per day
+    private float[] hours={6f,12.5f,8f,4.5f};//Hours worked per day
     private final double wage=12.50;//Wage I'm paid
     private float totalHours;//What I'm owed
     private float totalOwed;
@@ -67,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
         removeButton=findViewById(R.id.removeButton);
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
-        wageText.setText(String.format("Wage:\n%.2f", wage));
+        totOwedText=findViewById(R.id.totOwedText);
+        wageText.setText(String.format("Wage:\n$%.2f", wage));
         totHourText.setText(String.format("Total Hours:\n%.1f", getTotalHours(hours)));
+        totOwedText.setText(String.format("Total Owed:\n$%.2f", getTotalHours(hours)*wage));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
