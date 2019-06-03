@@ -22,7 +22,7 @@ import java.util.Arrays;
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
-    private Resources res=getResources();
+    //private Resources res=getResources();
     private ConstraintLayout activity_main;
     private Button addButton;
     private Button removeButton;
@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView totHourText;
     private TextView totOwedText;
 
+    private DecimalFormat df=new DecimalFormat("0.00");
     private String[] days;//Days worked
-    private BigDecimal[] hours={new BigDecimal("123.321")};//Hours worked per day
+    private BigDecimal[] hours={new BigDecimal("123.5")};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
@@ -63,9 +64,10 @@ public class MainActivity extends AppCompatActivity {
         return(sum);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        System.out.println("X");
+        System.out.print("X");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -74,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        wageText.setText(String.format(res.getString(R.string.wage),wage));
-        totHourText.setText("Total Hours:\n$"+getTotalHours(hours).toString());
+        //wageText.setText(String.format(res.getString(R.string.wage),wage));
+        wageText.setText("Wage:\n$"+df.format(wage));
+        totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
+        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
         /*
         //TODO: get better formating for BigDecimals
         totHourText.setText(new DecimalFormat("Total Hours:\n%#.##").format(getTotalHours(hours)));
