@@ -1,6 +1,7 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
+    private Resources res=getResources();
     private ConstraintLayout activity_main;
     private Button addButton;
     private Button removeButton;
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         return(sum);
     }
 
-    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState){
         System.out.println("X");
@@ -73,10 +74,13 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        wageText.setText(new DecimalFormat("Wage:\n$#.##").format(wage));
+        wageText.setText(String.format(res.getString(R.string.wage),wage));
+        totHourText.setText("Total Hours:\n$"+getTotalHours(hours).toString());
+        /*
         //TODO: get better formating for BigDecimals
         totHourText.setText(new DecimalFormat("Total Hours:\n%#.##").format(getTotalHours(hours)));
         totOwedText.setText(new DecimalFormat("Total Owed:\n$#.##").format(getTotalHours(hours).multiply(wage)));
+        */
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
