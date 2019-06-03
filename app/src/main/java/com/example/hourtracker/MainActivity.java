@@ -1,5 +1,6 @@
 package com.example.hourtracker;
 
+import android.annotation.SuppressLint;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
     private Button addButton;
     private Button removeButton;
+    private TextView wageText;
 
     private String[] days;//Days worked
     private float[] dayHours;//Hours worked per day
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         return(rtn);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         addButton=findViewById(R.id.addButton);
         removeButton=findViewById(R.id.removeButton);
+        wageText=findViewById(R.id.wageText);
+        wageText.setText(String.format("Wage:\n%.2f",wage));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
