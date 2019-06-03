@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView totOwedText;
 
     private String[] days;//Days worked
-    private BigDecimal[] hours;//Hours worked per day
+    private BigDecimal[] hours={new BigDecimal("123.321")};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
@@ -73,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        wageText.setText(new DecimalFormat("Wage:\n$#0.##").format(wage));
-        //totHourText.setText(String.format("Total Hours:\n%.1f", getTotalHours(hours)));
-        //totOwedText.setText(String.format("Total Owed:\n$%.2f", getTotalHours(hours).multiply(wage)));
+        wageText.setText(new DecimalFormat("Wage:\n$#.##").format(wage));
+        //TODO: get better formating for BigDecimals
+        totHourText.setText(new DecimalFormat("Total Hours:\n%#.##").format(getTotalHours(hours)));
+        totOwedText.setText(new DecimalFormat("Total Owed:\n$#.##").format(getTotalHours(hours).multiply(wage)));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
