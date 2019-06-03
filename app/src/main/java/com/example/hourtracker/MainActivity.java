@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 //TODO: Have days, dayHours, and wage read/write to a file
@@ -17,6 +19,7 @@ import java.util.Arrays;
 //https://stackoverflow.com/questions/30417810/reading-from-a-text-file-in-android-studio-java Reading
 //TODO: Create system for removing hours
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
+//BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
     private Button addButton;
@@ -26,18 +29,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView totOwedText;
 
     private String[] days;//Days worked
-    private float[] hours={6f,12.5f,8f,4.5f};//Hours worked per day
-    private final double wage=12.50;//Wage I'm paid
-    private float totalHours;//What I'm owed
-    private float totalOwed;
-    private float paid;
+    private BigDecimal[] hours;//Hours worked per day
+    private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
+    private BigDecimal paid;
 
-    private StringBuilder daysString(String[] days,float[] hours){//Outputs the days owed and hours
+    private StringBuilder daysString(String[] days,BigDecimal[] hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
         for(int n=0;n<hours.length;n+=2){
             rtn.append(hours[n]).append("\t");
             rtn.append(hours[n+1]).append("\t");
-            rtn.append(hours[n+1]-hours[n]).append("\t");
+            rtn.append(hours[n+1].subtract(hours[n])).append("\t");
             rtn.append(days[n/2]).append("\n");
         }
         return(rtn);
@@ -50,10 +51,12 @@ public class MainActivity extends AppCompatActivity {
         return(rtn);
     }
 
-    private float getTotalHours(float[] hours){
-        float sum=0;
-        for(float h:hours){
-            sum+=h;
+    //private float
+
+    private BigDecimal getTotalHours(BigDecimal[] hours){
+        BigDecimal sum=new BigDecimal("0");
+        for(BigDecimal h:hours){
+            sum=sum.add(h);
         }
         return(sum);
     }
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        System.out.println("X");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        wageText.setText(String.format("Wage:\n$%.2f", wage));
-        totHourText.setText(String.format("Total Hours:\n%.1f", getTotalHours(hours)));
-        totOwedText.setText(String.format("Total Owed:\n$%.2f", getTotalHours(hours)*wage));
+        wageText.setText(new DecimalFormat("Wage:\n$#0.##").format(wage));
+        //totHourText.setText(String.format("Total Hours:\n%.1f", getTotalHours(hours)));
+        //totOwedText.setText(String.format("Total Owed:\n$%.2f", getTotalHours(hours).multiply(wage)));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
