@@ -20,6 +20,7 @@ import java.util.Arrays;
 //https://stackoverflow.com/questions/30417810/reading-from-a-text-file-in-android-studio-java Reading
 //TODO: Create system for removing hours
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
+
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
@@ -75,15 +76,9 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        //wageText.setText(String.format(res.getString(R.string.wage),wage));
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
-        /*
-        //TODO: get better formating for BigDecimals
-        totHourText.setText(new DecimalFormat("Total Hours:\n%#.##").format(getTotalHours(hours)));
-        totOwedText.setText(new DecimalFormat("Total Owed:\n$#.##").format(getTotalHours(hours).multiply(wage)));
-        */
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
