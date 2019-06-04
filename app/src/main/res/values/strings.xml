@@ -6,4 +6,8 @@
     <string name="wage">Wage</string>
     <string name="totHours">Total Hours</string>
     <string name="totOwed">Total Owed</string>
+    <string name="hours">Hours:\n</string>
+    <string name="dates">Dates:\n</string>
+    <string name="startHours">Start Hours:\n</string>
+    <string name="stopHours">Stop Hours:\n</string>
 </resources>
