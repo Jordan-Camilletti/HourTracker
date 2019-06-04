@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
+    public BigDecimal timeToHours(String[] hours, int index){
+        //Main is the hour difference between the two
+        //Remain is +/- 30 minutes of time to account for times ending at ##:30
+        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,3))-Integer.parseInt(hours[index].substring(0,3)));
+        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours[index+1].substring(3))-Integer.parseInt(hours[index].substring(3)))/60);
+        return(main.add(remain));
+    }
+
     public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
         for(int n=0;n<hours.length;n+=2){
@@ -47,12 +55,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return(rtn);
     }
-
-    public BigDecimal timeToHours(String[] hours, int index){
-        return(new BigDecimal("926"));
-    }
-
-    //private float
 
     public BigDecimal getTotalHours(String[] hours){
         BigDecimal sum=new BigDecimal("0");
