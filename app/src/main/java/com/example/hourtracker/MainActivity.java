@@ -29,29 +29,29 @@ public class MainActivity extends AppCompatActivity {
     private TextView wageText;
     private TextView totHourText;
     private TextView totOwedText;
+    private TextView mainText;
 
     private DecimalFormat df=new DecimalFormat("0.00");
-    private String[] days;//Days worked
-    private String[] hours={"123.5"};//Hours worked per day
+    private String[] days={"2019-02-42","3214-32-13","0926-06-21"};//Days worked
+    private String[] hours={"12:30","19:00","10:00","19:00","13:00","19:00"};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
     public BigDecimal timeToHours(String[] hours, int index){
         //Main is the hour difference between the two
         //Remain is +/- 30 minutes of time to account for times ending at ##:30
-        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,3))-Integer.parseInt(hours[index].substring(0,3)));
+        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,2))-Integer.parseInt(hours[index].substring(0,2)));
         BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours[index+1].substring(3))-Integer.parseInt(hours[index].substring(3)))/60);
         return(main.add(remain));
     }
 
     public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
-        StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
+        StringBuilder rtn=new StringBuilder("Start Hours \t\t Stop Hours \t\t Hours \t\t Date\n");
         for(int n=0;n<hours.length;n+=2){
-            rtn.append(hours[n]).append("\t");
-            rtn.append(hours[n+1]).append("\t");
-            rtn.append(timeToHours(hours,n));
-            //rtn.append(hours[n+1].subtract(hours[n])).append("\t");
-            rtn.append(days[n/2]).append("\n");
+            rtn.append(hours[n]).append("\t\t");
+            rtn.append(hours[n+1]).append("\t\t");
+            rtn.append(timeToHours(hours,n/2)).append("\t\t");
+            rtn.append(days[n/2]).append("\t\t").append("\n");
         }
         return(rtn);
     }
@@ -76,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
+        mainText=findViewById(R.id.mainText);
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+        mainText.setText(daysString(days,hours));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
