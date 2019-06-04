@@ -20,9 +20,9 @@ import java.util.Arrays;
 //https://stackoverflow.com/questions/30417810/reading-from-a-text-file-in-android-studio-java Reading
 //TODO: Create system for removing hours
 //TODO: setup 2nd screen for changing wage, seeing hours, etc
+
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
-    private Resources res=getResources();
     private ConstraintLayout activity_main;
     private Button addButton;
     private Button removeButton;
@@ -30,42 +30,44 @@ public class MainActivity extends AppCompatActivity {
     private TextView totHourText;
     private TextView totOwedText;
 
+    private DecimalFormat df=new DecimalFormat("0.00");
     private String[] days;//Days worked
-    private BigDecimal[] hours={new BigDecimal("123.321")};//Hours worked per day
+    private String[] hours={"123.5"};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    private StringBuilder daysString(String[] days,BigDecimal[] hours){//Outputs the days owed and hours
+    public BigDecimal timeToHours(String[] hours, int index){
+        //Main is the hour difference between the two
+        //Remain is +/- 30 minutes of time to account for times ending at ##:30
+        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,3))-Integer.parseInt(hours[index].substring(0,3)));
+        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours[index+1].substring(3))-Integer.parseInt(hours[index].substring(3)))/60);
+        return(main.add(remain));
+    }
+
+    public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
         for(int n=0;n<hours.length;n+=2){
             rtn.append(hours[n]).append("\t");
             rtn.append(hours[n+1]).append("\t");
-            rtn.append(hours[n+1].subtract(hours[n])).append("\t");
+            rtn.append(timeToHours(hours,n));
+            //rtn.append(hours[n+1].subtract(hours[n])).append("\t");
             rtn.append(days[n/2]).append("\n");
         }
         return(rtn);
     }
 
-    private StringBuilder wagesString(float totHours,double wage){//Outputs the total owed hours and $ owed
-        StringBuilder rtn=new StringBuilder("Hours \t\t Owed");
-        rtn.append(totHours).append("\t\t");
-        rtn.append(totHours*wage);
-        return(rtn);
-    }
-
-    //private float
-
-    private BigDecimal getTotalHours(BigDecimal[] hours){
+    public BigDecimal getTotalHours(String[] hours){
         BigDecimal sum=new BigDecimal("0");
-        for(BigDecimal h:hours){
-            sum=sum.add(h);
+        for(int n=0;n<hours.length/2;n++){
+            sum=sum.add(timeToHours(hours,n));
         }
         return(sum);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        System.out.println("X");
+        System.out.print("X");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -74,13 +76,9 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        wageText.setText(String.format(res.getString(R.string.wage),wage));
-        totHourText.setText("Total Hours:\n$"+getTotalHours(hours).toString());
-        /*
-        //TODO: get better formating for BigDecimals
-        totHourText.setText(new DecimalFormat("Total Hours:\n%#.##").format(getTotalHours(hours)));
-        totOwedText.setText(new DecimalFormat("Total Owed:\n$#.##").format(getTotalHours(hours).multiply(wage)));
-        */
+        wageText.setText("Wage:\n$"+df.format(wage));
+        totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
+        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
