@@ -32,34 +32,32 @@ public class MainActivity extends AppCompatActivity {
 
     private DecimalFormat df=new DecimalFormat("0.00");
     private String[] days;//Days worked
-    private BigDecimal[] hours={new BigDecimal("123.5")};//Hours worked per day
+    private String[] hours={"123.5"};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    private StringBuilder daysString(String[] days,BigDecimal[] hours){//Outputs the days owed and hours
+    public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
         for(int n=0;n<hours.length;n+=2){
             rtn.append(hours[n]).append("\t");
             rtn.append(hours[n+1]).append("\t");
-            rtn.append(hours[n+1].subtract(hours[n])).append("\t");
+            rtn.append(timeToHours(hours,n));
+            //rtn.append(hours[n+1].subtract(hours[n])).append("\t");
             rtn.append(days[n/2]).append("\n");
         }
         return(rtn);
     }
 
-    private StringBuilder wagesString(float totHours,double wage){//Outputs the total owed hours and $ owed
-        StringBuilder rtn=new StringBuilder("Hours \t\t Owed");
-        rtn.append(totHours).append("\t\t");
-        rtn.append(totHours*wage);
-        return(rtn);
+    public BigDecimal timeToHours(String[] hours, int index){
+        return(new BigDecimal("926"));
     }
 
     //private float
 
-    private BigDecimal getTotalHours(BigDecimal[] hours){
+    public BigDecimal getTotalHours(String[] hours){
         BigDecimal sum=new BigDecimal("0");
-        for(BigDecimal h:hours){
-            sum=sum.add(h);
+        for(int n=0;n<hours.length/2;n++){
+            sum=sum.add(timeToHours(hours,n));
         }
         return(sum);
     }
