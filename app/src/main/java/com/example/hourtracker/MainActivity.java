@@ -29,7 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView wageText;
     private TextView totHourText;
     private TextView totOwedText;
-    private TextView mainText;
+    private TextView datesText;
+    private TextView startHoursText;
+    private TextView stopHoursText;
+    private TextView hoursText;
 
     private DecimalFormat df=new DecimalFormat("0.00");
     private String[] days={"2019-02-42","3214-32-13","0926-06-21"};//Days worked
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
-        StringBuilder rtn=new StringBuilder("Start Hours \t\t Stop Hours \t\t Hours \t\t Date\n");
+        StringBuilder rtn=new StringBuilder("Date \t\t Stop Hours \t\t Hours \t\t Start Hours\n");
         for(int n=0;n<hours.length;n+=2){
             rtn.append(hours[n]).append("\t\t");
             rtn.append(hours[n+1]).append("\t\t");
@@ -75,11 +78,20 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
-        mainText=findViewById(R.id.mainText);
+        datesText=findViewById(R.id.datesText);
+        startHoursText=findViewById(R.id.startHoursTest);
+        stopHoursText=findViewById(R.id.stopHoursText);
+        hoursText=findViewById(R.id.hoursText);
+
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
-        mainText.setText(daysString(days,hours));
+        for(int n=0;n<hours.length;n+=2){
+            datesText.append(hours[n]+"\n");
+            startHoursText.append(hours[n+1]+"\n");
+            stopHoursText.append(timeToHours(hours,n)+"\n");
+            hoursText.append(days[n/2]+"\n");
+        }
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
