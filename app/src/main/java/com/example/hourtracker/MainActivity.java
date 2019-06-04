@@ -29,29 +29,32 @@ public class MainActivity extends AppCompatActivity {
     private TextView wageText;
     private TextView totHourText;
     private TextView totOwedText;
+    private TextView datesText;
+    private TextView startHoursText;
+    private TextView stopHoursText;
+    private TextView hoursText;
 
     private DecimalFormat df=new DecimalFormat("0.00");
-    private String[] days;//Days worked
-    private String[] hours={"123.5"};//Hours worked per day
+    private String[] days={"2019-02-42","3214-32-13","0926-06-21"};//Days worked
+    private String[] hours={"12:30","19:00","10:00","19:00","13:00","19:00"};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
     public BigDecimal timeToHours(String[] hours, int index){
         //Main is the hour difference between the two
         //Remain is +/- 30 minutes of time to account for times ending at ##:30
-        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,3))-Integer.parseInt(hours[index].substring(0,3)));
-        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours[index+1].substring(3))-Integer.parseInt(hours[index].substring(3)))/60);
+        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,2))-Integer.parseInt(hours[index].substring(0,2)));
+        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours[index+1].substring(3))-Integer.parseInt(hours[index].substring(3)))/60.0);
         return(main.add(remain));
     }
 
     public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
-        StringBuilder rtn=new StringBuilder("Start Hours \t Stop Hours \t Hours \t Date\n");
+        StringBuilder rtn=new StringBuilder("Date \t\t Stop Hours \t\t Hours \t\t Start Hours\n");
         for(int n=0;n<hours.length;n+=2){
-            rtn.append(hours[n]).append("\t");
-            rtn.append(hours[n+1]).append("\t");
-            rtn.append(timeToHours(hours,n));
-            //rtn.append(hours[n+1].subtract(hours[n])).append("\t");
-            rtn.append(days[n/2]).append("\n");
+            rtn.append(hours[n]).append("\t\t");
+            rtn.append(hours[n+1]).append("\t\t");
+            rtn.append(timeToHours(hours,n)).append("\t\t");
+            rtn.append(days[n/2]).append("\t\t").append("\n");
         }
         return(rtn);
     }
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public BigDecimal getTotalHours(String[] hours){
         BigDecimal sum=new BigDecimal("0");
         for(int n=0;n<hours.length/2;n++){
-            sum=sum.add(timeToHours(hours,n));
+            sum=sum.add(timeToHours(hours,n*2));
         }
         return(sum);
     }
@@ -67,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        System.out.print("X");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -76,9 +78,20 @@ public class MainActivity extends AppCompatActivity {
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
+        datesText=findViewById(R.id.datesText);
+        startHoursText=findViewById(R.id.startHoursTest);
+        stopHoursText=findViewById(R.id.stopHoursText);
+        hoursText=findViewById(R.id.hoursText);
+
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+        for(int n=0;n<hours.length;n+=2){
+            datesText.append(hours[n]+"\n");
+            startHoursText.append(hours[n+1]+"\n");
+            stopHoursText.append(timeToHours(hours,n)+"\n");
+            hoursText.append(days[n/2]+"\n");
+        }
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
