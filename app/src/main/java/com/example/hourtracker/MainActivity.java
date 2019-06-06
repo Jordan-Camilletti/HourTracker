@@ -1,6 +1,8 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +13,15 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 //TODO 1: Have days, dayHours, and wage read/write to a file
 //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
@@ -24,6 +32,9 @@ import java.util.Arrays;
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
+
+    private Context mContext;//Used to read/write data to/from hours.txt
+
     private Button addButton;
     private Button removeButton;
     private TextView wageText;
@@ -39,6 +50,21 @@ public class MainActivity extends AppCompatActivity {
     private String[] hours={"12:30","19:00","10:00","19:00","13:00","19:00"};//Hours worked per day
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
+
+    public List<String> getHours(){
+        List<String> daysLines=new ArrayList<>();
+        AssetManager am=mContext.getAssets();
+        try {
+            InputStream is = am.open("hours.txt");
+            BufferedReader reader=new BufferedReader(new InputStreamReader(is));
+            String ln;
+            while((ln=reader.readLine())!=null)
+                daysLines.add(ln);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        return(daysLines);
+    }
 
     public BigDecimal timeToHours(String[] hours, int index){
         //Main is the hour difference between the two
@@ -82,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         startHoursText=findViewById(R.id.startHoursTest);
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
+
+        System.out.println(getHours());
 
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
