@@ -14,9 +14,12 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -32,8 +35,6 @@ import java.util.List;
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
-
-    private Context mContext=this;//Used to read/write data to/from hours.txt
 
     private Button addButton;
     private Button removeButton;
@@ -51,22 +52,19 @@ public class MainActivity extends AppCompatActivity {
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    public List<String> getHours(){//TODO: GET THIS WORKING YOU IDIOT!
-        List<String> daysLines=new ArrayList<>();
-        AssetManager am=mContext.getAssets();
-        try {
-            InputStream is = am.open("hours.txt");
-            BufferedReader reader=new BufferedReader(new InputStreamReader(is));
-            String ln="";
-            while(ln!=null) {
-                ln=reader.readLine();
-                System.out.println(ln);
-                daysLines.add(ln);
-            }
-        } catch(IOException e){
+    public String getHours(){//TODO: GET THIS WORKING YOU IDIOT!
+        String rtn="";
+        try{
+            InputStream is=getAssets().open("hours.txt");
+            int size=is.available();
+            byte[] buffer=new byte[size];
+            is.read(buffer);
+            is.close();
+            rtn=new String(buffer);
+        }catch(IOException e){
             e.printStackTrace();
         }
-        return(daysLines);
+        return(rtn);
     }
 
     public BigDecimal timeToHours(String[] hours, int index){
@@ -112,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
 
+        System.out.println("UwU");
         System.out.println(getHours());
 
         wageText.setText("Wage:\n$"+df.format(wage));
