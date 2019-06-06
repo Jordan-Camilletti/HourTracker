@@ -47,48 +47,55 @@ public class MainActivity extends AppCompatActivity {
     private TextView hoursText;
 
     private DecimalFormat df=new DecimalFormat("0.00");
-    private String[] days={"2019-02-42","3214-32-13","0926-06-21"};//Days worked
-    private String[] hours={"12:30","19:00","10:00","19:00","13:00","19:00"};//Hours worked per day
+    private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
+    private ArrayList<String> days=new ArrayList<>();//Days worked
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    public String getHours(){//TODO: GET THIS WORKING YOU IDIOT!
-        String rtn="";
+    public String getHours(){
+        //String rtn;
         try{
             InputStream is=getAssets().open("hours.txt");
             int size=is.available();
             byte[] buffer=new byte[size];
             is.read(buffer);
             is.close();
-            rtn=new String(buffer);
+            String rtn[]=(new String(buffer)).split(" |\\\n");
+            for(int n=0;n<rtn.length;n++){
+                if((n+1)%3==0){//hours
+                    hours.add(rtn[n]);
+                }else{//days
+                    days.add(rtn[n]);
+                }
+            }
         }catch(IOException e){
             e.printStackTrace();
         }
-        return(rtn);
+        return("");
     }
 
-    public BigDecimal timeToHours(String[] hours, int index){
+    public BigDecimal timeToHours(ArrayList<String> hours, int index){
         //Main is the hour difference between the two
         //Remain is +/- 30 minutes of time to account for times ending at ##:30
-        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours[index+1].substring(0,2))-Integer.parseInt(hours[index].substring(0,2)));
-        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours[index+1].substring(3))-Integer.parseInt(hours[index].substring(3)))/60.0);
+        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours.get(index+1).substring(0,2))-Integer.parseInt(hours.get(index).substring(0,2)));
+        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours.get(index+1).substring(3))-Integer.parseInt(hours.get(index).substring(3)))/60.0);
         return(main.add(remain));
     }
 
-    public StringBuilder daysString(String[] days,String[] hours){//Outputs the days owed and hours
+    public StringBuilder daysString(ArrayList<String> days,ArrayList<String> hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Date \t\t Stop Hours \t\t Hours \t\t Start Hours\n");
-        for(int n=0;n<hours.length;n+=2){
-            rtn.append(hours[n]).append("\t\t");
-            rtn.append(hours[n+1]).append("\t\t");
+        for(int n=0;n<hours.size();n+=2){
+            rtn.append(hours.get(n)).append("\t\t");
+            rtn.append(hours.get(n+1)).append("\t\t");
             rtn.append(timeToHours(hours,n)).append("\t\t");
-            rtn.append(days[n/2]).append("\t\t").append("\n");
+            rtn.append(days.get(n/2)).append("\t\t").append("\n");
         }
         return(rtn);
     }
 
-    public BigDecimal getTotalHours(String[] hours){
+    public BigDecimal getTotalHours(ArrayList<String> hours){
         BigDecimal sum=new BigDecimal("0");
-        for(int n=0;n<hours.length/2;n++){
+        for(int n=0;n<hours.size()/2;n++){
             sum=sum.add(timeToHours(hours,n*2));
         }
         return(sum);
@@ -110,17 +117,21 @@ public class MainActivity extends AppCompatActivity {
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
 
+        String[] test=getHours().split(" |\\\n");
         System.out.println("UwU");
-        System.out.println(getHours());
+        for(int n=0;n<test.length;n++){
+            System.out.println(n+" "+test[n]);
+        }
+        System.out.println("OwO");
 
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
-        for(int n=0;n<hours.length;n+=2){
-            datesText.append(hours[n]+"\n");
-            startHoursText.append(hours[n+1]+"\n");
+        for(int n=0;n<hours.size();n+=2){
+            datesText.append(hours.get(n)+"\n");
+            startHoursText.append(hours.get(n+1)+"\n");
             stopHoursText.append(timeToHours(hours,n)+"\n");
-            hoursText.append(days[n/2]+"\n");
+            hoursText.append(days.get(n/2)+"\n");
         }
 
         addButton.setOnClickListener(new View.OnClickListener(){
