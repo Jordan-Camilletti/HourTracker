@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    public String getHours(){
+    public String setHoursInfo(){
         //String rtn;
         try{
             InputStream is=getAssets().open("hours.txt");
@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
             is.close();
             String rtn[]=(new String(buffer)).split(" |\\\n");
             for(int n=0;n<rtn.length;n++){
-                if((n+1)%3==0){//hours
-                    hours.add(rtn[n]);
-                }else{//days
+                if((n+1)%3==0){//days
                     days.add(rtn[n]);
+                }else{//hours
+                    hours.add(rtn[n]);
                 }
             }
         }catch(IOException e){
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         return(main.add(remain));
     }
 
-    public StringBuilder daysString(ArrayList<String> days,ArrayList<String> hours){//Outputs the days owed and hours
+    /*public StringBuilder daysString(ArrayList<String> days,ArrayList<String> hours){//Outputs the days owed and hours
         StringBuilder rtn=new StringBuilder("Date \t\t Stop Hours \t\t Hours \t\t Start Hours\n");
         for(int n=0;n<hours.size();n+=2){
             rtn.append(hours.get(n)).append("\t\t");
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             rtn.append(days.get(n/2)).append("\t\t").append("\n");
         }
         return(rtn);
-    }
+    }*/
 
     public BigDecimal getTotalHours(ArrayList<String> hours){
         BigDecimal sum=new BigDecimal("0");
@@ -117,21 +117,25 @@ public class MainActivity extends AppCompatActivity {
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
 
-        String[] test=getHours().split(" |\\\n");
+        /*String[] test=getHours().split(" |\\\n");
         System.out.println("UwU");
         for(int n=0;n<test.length;n++){
             System.out.println(n+" "+test[n]);
         }
-        System.out.println("OwO");
+        System.out.println("OwO");*/
+        setHoursInfo();
+        System.out.println(days);
+        System.out.println("OWO");
+        System.out.println(hours);
 
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
         for(int n=0;n<hours.size();n+=2){
-            datesText.append(hours.get(n)+"\n");
-            startHoursText.append(hours.get(n+1)+"\n");
-            stopHoursText.append(timeToHours(hours,n)+"\n");
-            hoursText.append(days.get(n/2)+"\n");
+            startHoursText.append(hours.get(n)+"\n");
+            stopHoursText.append(hours.get(n+1)+"\n");
+            hoursText.append(timeToHours(hours,n)+"\n");
+            datesText.append(days.get(n/2)+"\n");
         }
 
         addButton.setOnClickListener(new View.OnClickListener(){
