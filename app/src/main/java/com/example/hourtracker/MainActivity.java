@@ -33,7 +33,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
 
-    private Context mContext;//Used to read/write data to/from hours.txt
+    private Context mContext=this;//Used to read/write data to/from hours.txt
 
     private Button addButton;
     private Button removeButton;
@@ -51,15 +51,18 @@ public class MainActivity extends AppCompatActivity {
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    public List<String> getHours(){
+    public List<String> getHours(){//TODO: GET THIS WORKING YOU IDIOT!
         List<String> daysLines=new ArrayList<>();
         AssetManager am=mContext.getAssets();
         try {
             InputStream is = am.open("hours.txt");
             BufferedReader reader=new BufferedReader(new InputStreamReader(is));
-            String ln;
-            while((ln=reader.readLine())!=null)
+            String ln="";
+            while(ln!=null) {
+                ln=reader.readLine();
+                System.out.println(ln);
                 daysLines.add(ln);
+            }
         } catch(IOException e){
             e.printStackTrace();
         }
