@@ -15,11 +15,11 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
-//TODO: Have days, dayHours, and wage read/write to a file
+//TODO 1: Have days, dayHours, and wage read/write to a file
 //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
 //https://stackoverflow.com/questions/30417810/reading-from-a-text-file-in-android-studio-java Reading
-//TODO: Create system for removing hours
-//TODO: setup 2nd screen for changing wage, seeing hours, etc
+//TODO 2: Create system for removing hours
+//TODO 3: setup 2nd screen for changing wage, seeing hours, etc
 
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
@@ -96,14 +96,14 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO: add function for addButton click
+                //TODO 2.a: add function for addButton click
             }
         });
 
         removeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO: add function for removeButton click
+                //TODO 2.b: add function for removeButton click
             }
         });
     }
