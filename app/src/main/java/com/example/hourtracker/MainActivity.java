@@ -68,17 +68,6 @@ public class MainActivity extends AppCompatActivity {
         return(main.add(remain));
     }
 
-    /*public StringBuilder daysString(ArrayList<String> days,ArrayList<String> hours){//Outputs the days owed and hours
-        StringBuilder rtn=new StringBuilder("Date \t\t Stop Hours \t\t Hours \t\t Start Hours\n");
-        for(int n=0;n<hours.size();n+=2){
-            rtn.append(hours.get(n)).append("\t\t");
-            rtn.append(hours.get(n+1)).append("\t\t");
-            rtn.append(timeToHours(hours,n)).append("\t\t");
-            rtn.append(days.get(n/2)).append("\t\t").append("\n");
-        }
-        return(rtn);
-    }*/
-
     public BigDecimal getTotalHours(ArrayList<String> hours){
         BigDecimal sum=new BigDecimal("0");
         for(int n=0;n<hours.size()/2;n++){
@@ -102,17 +91,7 @@ public class MainActivity extends AppCompatActivity {
         startHoursText=findViewById(R.id.startHoursTest);
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
-
-        /*String[] test=getHours().split(" |\\\n");
-        System.out.println("UwU");
-        for(int n=0;n<test.length;n++){
-            System.out.println(n+" "+test[n]);
-        }
-        System.out.println("OwO");*/
         setHoursInfo();
-        System.out.println(days);
-        System.out.println("OWO");
-        System.out.println(hours);
 
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
