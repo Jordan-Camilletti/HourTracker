@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 //TODO 1: Have days, dayHours, and wage read/write to a file
 //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
-//https://stackoverflow.com/questions/30417810/reading-from-a-text-file-in-android-studio-java Reading
 //TODO 2: Create system for removing hours
 //TODO 3: setup 2nd screen for changing wage, seeing hours, etc
 
