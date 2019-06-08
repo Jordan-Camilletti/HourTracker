@@ -1,9 +1,6 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,20 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 //TODO 1: Have days, dayHours, and wage read/write to a file
 //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
@@ -52,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
-    public String setHoursInfo(){
-        //String rtn;
+    public void setHoursInfo(){
         try{
             InputStream is=getAssets().open("hours.txt");
             int size=is.available();
@@ -71,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         }catch(IOException e){
             e.printStackTrace();
         }
-        return("");
     }
 
     public BigDecimal timeToHours(ArrayList<String> hours, int index){
