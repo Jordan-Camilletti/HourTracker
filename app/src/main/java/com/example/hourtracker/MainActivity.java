@@ -1,6 +1,9 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +25,9 @@ import java.util.ArrayList;
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
     private Button addButton;
     private Button removeButton;
@@ -90,8 +96,11 @@ public class MainActivity extends AppCompatActivity {
         startHoursText=findViewById(R.id.startHoursTest);
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
-        setHoursInfo();
 
+        mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor=mPreferences.edit();
+
+        setHoursInfo();
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
