@@ -2,6 +2,7 @@ package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
@@ -115,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO 2.a: add function for addButton click
+                Intent intent=new Intent(MainActivity.this,AddScreen.class);
+                startActivity(intent);//Switching to add screen
             }
         });
 
