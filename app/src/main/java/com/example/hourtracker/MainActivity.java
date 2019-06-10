@@ -116,15 +116,16 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent=new Intent(MainActivity.this,AddScreen.class);
-                startActivity(intent);//Switching to add screen
+                Intent addIntent=new Intent(MainActivity.this,AddScreen.class);
+                startActivity(addIntent);//Switching to add screen
             }
         });
 
         removeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO 2.b: add function for removeButton click
+                Intent removeIntent=new Intent(MainActivity.this,RemoveScreen.class);
+                startActivity(removeIntent);//Switching to remove screen
             }
         });
     }
