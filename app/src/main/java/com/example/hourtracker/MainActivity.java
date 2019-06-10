@@ -27,9 +27,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
 
-    private SharedPreferences mPreferences;
-    private SharedPreferences.Editor mEditor;
-
     private Button addButton;
     private Button removeButton;
     private TextView wageText;
@@ -97,10 +94,6 @@ public class MainActivity extends AppCompatActivity {
         startHoursText=findViewById(R.id.startHoursTest);
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
-
-        //https://www.youtube.com/watch?v=3Zrwi3FFrC8
-        mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor=mPreferences.edit();
 
         setHoursInfo();
         wageText.setText("Wage:\n$"+df.format(wage));
