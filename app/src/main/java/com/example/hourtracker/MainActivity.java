@@ -2,6 +2,7 @@ package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
@@ -25,9 +26,6 @@ import java.util.ArrayList;
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
-
-    private SharedPreferences mPreferences;
-    private SharedPreferences.Editor mEditor;
 
     private Button addButton;
     private Button removeButton;
@@ -97,10 +95,6 @@ public class MainActivity extends AppCompatActivity {
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
 
-        //https://www.youtube.com/watch?v=3Zrwi3FFrC8
-        mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor=mPreferences.edit();
-
         setHoursInfo();
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
@@ -115,14 +109,16 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO 2.a: add function for addButton click
+                Intent addIntent=new Intent(MainActivity.this,AddScreen.class);
+                startActivity(addIntent);//Switching to add screen
             }
         });
 
         removeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO 2.b: add function for removeButton click
+                Intent removeIntent=new Intent(MainActivity.this,RemoveScreen.class);
+                startActivity(removeIntent);//Switching to remove screen
             }
         });
     }
