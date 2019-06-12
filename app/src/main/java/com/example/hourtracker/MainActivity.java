@@ -2,6 +2,8 @@ package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button addButton;
     private Button removeButton;
+    private Button updateButton;
     private TextView wageText;
     private TextView totHourText;
     private TextView totOwedText;
@@ -34,10 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView stopHoursText;
     private TextView hoursText;
 
+    private SharedPreferences mPreferences;
+
     private DecimalFormat df=new DecimalFormat("0.00");
     private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
     private ArrayList<String> days=new ArrayList<>();//Days worked
-    private final BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
+    private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
     private BigDecimal paid;
 
     public void setHoursInfo(){
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         addButton=findViewById(R.id.addButton);
         removeButton=findViewById(R.id.removeButton);
+        updateButton=findViewById(R.id.updateButton);
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);
@@ -93,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         hoursText=findViewById(R.id.hoursText);
 
         setHoursInfo();
+        mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
@@ -108,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent addIntent=new Intent(MainActivity.this,AddScreen.class);
                 startActivity(addIntent);//Switching to add screen
+                System.out.println("OWO");
             }
         });
 
@@ -116,6 +125,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent removeIntent=new Intent(v.getContext(),RemoveScreen.class);
                 startActivity(removeIntent);//Switching to remove screen
+            }
+        });
+
+        updateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
+                System.out.println(wage);
+                wageText.setText("Wage:\n$"+df.format(wage));
+                totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
             }
         });
     }
