@@ -19,7 +19,7 @@ public class AddScreen extends AppCompatActivity {
     private EditText wageInput;
     private Button wageSetButton;
     private Button backButton;
-    private BigDecimal newWage;
+    private BigDecimal newWage=new BigDecimal("12.50");//Wage I'm paid;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,8 @@ public class AddScreen extends AppCompatActivity {
                 wageInput=(EditText) findViewById(R.id.wageInput);
                 newWage=new BigDecimal(wageInput.getText().toString());
                 System.out.println(newWage);
+                mEditor.putString("Wage",wageInput.getText().toString());
+                mEditor.commit();
             }
         });
 
