@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         removeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent removeIntent=new Intent(MainActivity.this,RemoveScreen.class);
+                Intent removeIntent=new Intent(v.getContext(),RemoveScreen.class);
                 startActivity(removeIntent);//Switching to remove screen
             }
         });

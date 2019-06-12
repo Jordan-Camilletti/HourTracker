@@ -1,5 +1,6 @@
 package com.example.hourtracker;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.ExtractEditText;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class AddScreen extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                finish();//Switching to main screen
             }
         });
     }
