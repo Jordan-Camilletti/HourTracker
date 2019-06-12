@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent addIntent=new Intent(MainActivity.this,AddScreen.class);
                 startActivity(addIntent);//Switching to add screen
+                System.out.println("OWO");
             }
         });
 
