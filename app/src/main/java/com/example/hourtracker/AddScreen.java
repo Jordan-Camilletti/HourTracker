@@ -29,8 +29,8 @@ public class AddScreen extends AppCompatActivity {
         wageSetButton=(Button) findViewById(R.id.wageSetButton);
         backButton=(Button) findViewById(R.id.backButton);
 
-        //https://www.youtube.com/watch?v=3Zrwi3FFrC8
-        mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+        https://www.youtube.com/watch?v=3Zrwi3FFrC8
+        mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         mEditor=mPreferences.edit();
 
         wageSetButton.setOnClickListener(new View.OnClickListener(){
@@ -38,7 +38,7 @@ public class AddScreen extends AppCompatActivity {
             public void onClick(View v){
                 wageInput=(EditText) findViewById(R.id.wageInput);
                 newWage=new BigDecimal(wageInput.getText().toString());
-                System.out.println(newWage);
+                //System.out.println(newWage);
                 mEditor.putString("Wage",wageInput.getText().toString());
                 mEditor.commit();
             }
