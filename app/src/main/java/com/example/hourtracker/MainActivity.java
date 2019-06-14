@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -64,6 +68,38 @@ public class MainActivity extends AppCompatActivity {
         }catch(IOException e){
             e.printStackTrace();
         }*/
+        FileInputStream fis=null;
+        try{
+            fis=openFileInput(FILE_NAME);
+            InputStreamReader isr=new InputStreamReader(fis);
+            BufferedReader br=new BufferedReader(isr);
+            StringBuilder sb=new StringBuilder();
+            String text="";
+            while((text=br.readLine())!=null){
+                sb.append(text);
+            }
+            String rtn[]=(sb.toString().split(" |\\\n"));
+            for(int n=0;n<rtn.length;n++){
+                if((n+1)%3==0){//days
+                    days.add(rtn[n]);
+                }else{//hours
+                    hours.add(rtn[n]);
+                }
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            if(fis!=null){
+                try {
+                    fis.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     public BigDecimal timeToHours(ArrayList<String> hours, int index){

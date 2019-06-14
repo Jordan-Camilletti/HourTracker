@@ -67,7 +67,9 @@ public class AddScreen extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     try {
-                        fos.close();
+                        if(fos!=null){
+                            fos.close();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
