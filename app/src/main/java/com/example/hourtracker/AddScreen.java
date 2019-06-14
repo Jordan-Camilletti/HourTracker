@@ -1,8 +1,6 @@
 package com.example.hourtracker;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.inputmethodservice.ExtractEditText;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +38,17 @@ public class AddScreen extends AppCompatActivity {
         https://www.youtube.com/watch?v=3Zrwi3FFrC8
         mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         mEditor=mPreferences.edit();
+
+        addHours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String rtn="";
+                rtn+=startTimeInput.getText().toString()+" ";
+                rtn+=stopTimeInput.getText().toString()+" ";
+                rtn+=dateInput.getText().toString()+"\n";
+                System.out.println(rtn);
+            }
+        });
 
         wageSetButton.setOnClickListener(new View.OnClickListener(){
             @Override
