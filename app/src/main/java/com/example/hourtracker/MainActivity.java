@@ -105,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
     public BigDecimal timeToHours(ArrayList<String> hours, int index){
         //Main is the hour difference between the two
         //Remain is +/- 30 minutes of time to account for times ending at ##:30
-        BigDecimal main=BigDecimal.valueOf(Integer.parseInt(hours.get(index+1).substring(0,2))-Integer.parseInt(hours.get(index).substring(0,2)));
-        BigDecimal remain=BigDecimal.valueOf((Integer.parseInt(hours.get(index+1).substring(3))-Integer.parseInt(hours.get(index).substring(3)))/60.0);
-        return(main.add(remain));
+        try {
+            BigDecimal main = BigDecimal.valueOf(Integer.parseInt(hours.get(index + 1).substring(0, 2)) - Integer.parseInt(hours.get(index).substring(0, 2)));
+            BigDecimal remain = BigDecimal.valueOf((Integer.parseInt(hours.get(index + 1).substring(3)) - Integer.parseInt(hours.get(index).substring(3))) / 60.0);
+            return(main.add(remain));
+        }catch(StringIndexOutOfBoundsException e){
+            return(new BigDecimal(0));
+        }
     }
 
     public BigDecimal getTotalHours(ArrayList<String> hours){

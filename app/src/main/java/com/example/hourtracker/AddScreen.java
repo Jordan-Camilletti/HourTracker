@@ -60,7 +60,7 @@ public class AddScreen extends AppCompatActivity {
                     startTimeInput.getText().clear();
                     stopTimeInput.getText().clear();
                     dateInput.getText().clear();
-                    //Toast.makeText(this,"Saved to "+getFilesDir()+"/"+FILE_NAME,Toast.LENGTH_LONG).show();
+                    System.out.println("Saved to "+getFilesDir()+"/"+FILE_NAME);
                 } catch (FileNotFoundException e){
                     e.printStackTrace();
                 } catch (IOException e) {
