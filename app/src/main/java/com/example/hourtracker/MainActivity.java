@@ -14,12 +14,15 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //TODO 1: Have days, dayHours, and wage read/write to a file
 //https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView startHoursText;
     private TextView stopHoursText;
     private TextView hoursText;
+    private int lastHour=0;
 
     private SharedPreferences mPreferences;
 
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     hours.add(rtn[n]);
                 }
             }
+            System.out.println(Arrays.toString(rtn));
         }catch(FileNotFoundException e){
             e.printStackTrace();
         }catch(IOException e){
@@ -122,6 +127,26 @@ public class MainActivity extends AppCompatActivity {
         return(sum);
     }
 
+    public void updateAll(){
+        setHoursInfo();
+        wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
+
+        wageText.setText("Wage:\n$"+df.format(wage));
+        totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
+        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+        for(int n=0;n<hours.size();n+=2){
+            startHoursText.setText("");
+            startHoursText.append(hours.get(n)+"\n");
+            stopHoursText.setText("");
+            stopHoursText.append(hours.get(n+1)+"\n");
+            hoursText.setText("");
+            hoursText.append(timeToHours(hours,n)+"\n");
+            datesText.setText("");
+            datesText.append(days.get(n/2)+"\n");
+        }
+        lastHour=hours.size();
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -139,8 +164,9 @@ public class MainActivity extends AppCompatActivity {
         stopHoursText=findViewById(R.id.stopHoursText);
         hoursText=findViewById(R.id.hoursText);
 
-        setHoursInfo();
         mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+        /*setHoursInfo();
+        wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
 
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
@@ -151,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
             hoursText.append(timeToHours(hours,n)+"\n");
             datesText.append(days.get(n/2)+"\n");
         }
+        lastHour=hours.size()-1;*/
+        updateAll();
 
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -172,10 +200,20 @@ public class MainActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                /*setHoursInfo();
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
-                System.out.println(wage);
+
                 wageText.setText("Wage:\n$"+df.format(wage));
+                totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
                 totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+                for(int n=lastHour;n<hours.size();n+=2){
+                    startHoursText.append(hours.get(n)+"\n");
+                    stopHoursText.append(hours.get(n+1)+"\n");
+                    hoursText.append(timeToHours(hours,n)+"\n");
+                    datesText.append(days.get(n/2)+"\n");
+                }
+                lastHour=hours.size()-1;*/
+                updateAll();
             }
         });
     }
