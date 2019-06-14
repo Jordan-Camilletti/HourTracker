@@ -20,6 +20,7 @@ public class AddScreen extends AppCompatActivity {
     private EditText startTimeInput;
     private EditText stopTimeInput;
     private EditText dateInput;
+    private Button addHours;
     private Button wageSetButton;
     private Button backButton;
     private BigDecimal newWage=new BigDecimal("12.50");//Wage I'm paid;
@@ -32,6 +33,7 @@ public class AddScreen extends AppCompatActivity {
         startTimeInput=(EditText) findViewById(R.id.startTimeInput);
         stopTimeInput=(EditText) findViewById(R.id.stopTimeInput);
         dateInput=(EditText) findViewById(R.id.dateInput);
+        addHours=(Button) findViewById(R.id.addHours);
         wageSetButton=(Button) findViewById(R.id.wageSetButton);
         backButton=(Button) findViewById(R.id.backButton);
 
