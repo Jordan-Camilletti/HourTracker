@@ -1,6 +1,7 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -130,7 +132,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateAll(){
+        /*try{
+            FileOutputStream fos=openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write("12:30 19:00 2019-05-04 13:00 17:00 2019-05-11 ".getBytes());
+            fos.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }*/
+
+        //TODO: Fix bug involving not all hours printing out
+        //TODO: clean up the major mess we made her at 1:00 AM
+        //(Sorry future me, from: past 1:00 AM me)
         setHoursInfo();
+
+        System.out.println(days.toString());
+        System.out.println(hours.toString());
+
         wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
 
         wageText.setText("Wage:\n$"+df.format(wage));

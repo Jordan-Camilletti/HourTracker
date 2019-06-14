@@ -1,18 +1,27 @@
 package com.example.hourtracker;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
@@ -28,6 +37,49 @@ public class AddScreen extends AppCompatActivity {
     private Button wageSetButton;
     private Button backButton;
     private BigDecimal newWage=new BigDecimal("12.50");//Wage I'm paid;
+
+    private Context context=this;
+
+    public StringBuilder readFile(){
+        FileInputStream fis=null;
+        try{
+            fis=openFileInput(FILE_NAME);
+            InputStreamReader isr=new InputStreamReader(fis);
+            BufferedReader br=new BufferedReader(isr);
+            StringBuilder sb=new StringBuilder();
+            String text="";
+            while((text=br.readLine())!=null){
+                sb.append(text);
+            }
+            return(sb);
+            //String rtn[]=(sb.toString().split(" |\\\n"));
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            if(fis!=null){
+                try {
+                    fis.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return(new StringBuilder("WHY"));
+    }
+
+    public void appendHours(String add){
+        String filePath=context.getFilesDir().getPath()+"/"+FILE_NAME;
+        File file=new File(filePath);
+        try {
+            FileWriter fr = new FileWriter(file, true);
+            fr.write(add);
+            fr.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,28 +104,28 @@ public class AddScreen extends AppCompatActivity {
                 rtn+=startTimeInput.getText().toString()+" ";
                 rtn+=stopTimeInput.getText().toString()+" ";
                 rtn+=dateInput.getText().toString()+"\n";
-                //System.out.println(rtn);
-                FileOutputStream fos = null;
-                try {
-                    fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-                    fos.write(rtn.getBytes());
-                    startTimeInput.getText().clear();
-                    stopTimeInput.getText().clear();
-                    dateInput.getText().clear();
+
+                appendHours(rtn);
+                /*FileOutputStream fos=null;
+                try{
+                    fos=openFileOutput(FILE_NAME,Context.MODE_PRIVATE);
+                    fos.write((readFile().toString()+rtn).getBytes());
+                    fos.close();
                     System.out.println("Saved to "+getFilesDir()+"/"+FILE_NAME);
-                } catch (FileNotFoundException e){
+                }catch(Exception e){
                     e.printStackTrace();
+                }*/
+
+                /*try {
+                    BufferedWriter writer = new BufferedWriter(
+                                                new FileWriter(FILE_NAME, true)
+                                            );
+                    writer.newLine();
+                    writer.write(rtn);
+                    writer.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                } finally {
-                    try {
-                        if(fos!=null){
-                            fos.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                }*/
             }
         });
 
@@ -82,7 +134,6 @@ public class AddScreen extends AppCompatActivity {
             public void onClick(View v){
                 wageInput=(EditText) findViewById(R.id.wageInput);
                 newWage=new BigDecimal(wageInput.getText().toString());
-                //System.out.println(newWage);
                 mEditor.putString("Wage",wageInput.getText().toString());
                 mEditor.commit();
                 wageInput.getText().clear();
