@@ -17,6 +17,9 @@ public class AddScreen extends AppCompatActivity {
     private SharedPreferences.Editor mEditor;
 
     private EditText wageInput;
+    private EditText startTimeInput;
+    private EditText stopTimeInput;
+    private EditText dateInput;
     private Button wageSetButton;
     private Button backButton;
     private BigDecimal newWage=new BigDecimal("12.50");//Wage I'm paid;
@@ -26,6 +29,9 @@ public class AddScreen extends AppCompatActivity {
         setContentView(R.layout.activity_add);
 
         wageInput=(EditText) findViewById(R.id.wageInput);
+        startTimeInput=(EditText) findViewById(R.id.startTimeInput);
+        stopTimeInput=(EditText) findViewById(R.id.stopTimeInput);
+        dateInput=(EditText) findViewById(R.id.dateInput);
         wageSetButton=(Button) findViewById(R.id.wageSetButton);
         backButton=(Button) findViewById(R.id.backButton);
 
