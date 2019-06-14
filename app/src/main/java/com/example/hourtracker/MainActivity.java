@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
 
     public void setHoursInfo(){
+        hours=new ArrayList<>();
+        days=new ArrayList<>();
         /*try{
             InputStream is=getAssets().open("hours.txt");
             int size=is.available();
@@ -135,16 +137,15 @@ public class MainActivity extends AppCompatActivity {
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
         for(int n=0;n<hours.size();n+=2){
-            startHoursText.setText("");
+            startHoursText.setText("Start Hours:\n");
             startHoursText.append(hours.get(n)+"\n");
-            stopHoursText.setText("");
+            stopHoursText.setText("Stop Hours:\n");
             stopHoursText.append(hours.get(n+1)+"\n");
-            hoursText.setText("");
+            hoursText.setText("Hours:\n");
             hoursText.append(timeToHours(hours,n)+"\n");
-            datesText.setText("");
+            datesText.setText("Dates:\n");
             datesText.append(days.get(n/2)+"\n");
         }
-        lastHour=hours.size();
     }
 
     @SuppressLint("SetTextI18n")
@@ -185,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent addIntent=new Intent(MainActivity.this,AddScreen.class);
                 startActivity(addIntent);//Switching to add screen
-                System.out.println("OWO");
             }
         });
 
