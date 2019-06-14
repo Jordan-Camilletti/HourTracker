@@ -26,6 +26,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
 
+    private static final String FILE_NAME="hours.txt";
+
     private Button addButton;
     private Button removeButton;
     private Button updateButton;
@@ -43,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
     private ArrayList<String> days=new ArrayList<>();//Days worked
     private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
-    private BigDecimal paid;
 
     public void setHoursInfo(){
-        try{
+        /*try{
             InputStream is=getAssets().open("hours.txt");
             int size=is.available();
             byte[] buffer=new byte[size];
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }catch(IOException e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     public BigDecimal timeToHours(ArrayList<String> hours, int index){

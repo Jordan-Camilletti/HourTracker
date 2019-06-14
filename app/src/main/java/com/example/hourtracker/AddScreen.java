@@ -7,10 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 public class AddScreen extends AppCompatActivity {
+    private static final String FILE_NAME="hours.txt";
+
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
@@ -46,7 +52,26 @@ public class AddScreen extends AppCompatActivity {
                 rtn+=startTimeInput.getText().toString()+" ";
                 rtn+=stopTimeInput.getText().toString()+" ";
                 rtn+=dateInput.getText().toString()+"\n";
-                System.out.println(rtn);
+                //System.out.println(rtn);
+                FileOutputStream fos = null;
+                try {
+                    fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+                    fos.write(rtn.getBytes());
+                    startTimeInput.getText().clear();
+                    stopTimeInput.getText().clear();
+                    dateInput.getText().clear();
+                    //Toast.makeText(this,"Saved to "+getFilesDir()+"/"+FILE_NAME,Toast.LENGTH_LONG).show();
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -58,6 +83,7 @@ public class AddScreen extends AppCompatActivity {
                 //System.out.println(newWage);
                 mEditor.putString("Wage",wageInput.getText().toString());
                 mEditor.commit();
+                wageInput.getText().clear();
             }
         });
 
