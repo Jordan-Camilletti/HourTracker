@@ -1,7 +1,6 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -173,19 +171,6 @@ public class MainActivity extends AppCompatActivity {
         hoursText=findViewById(R.id.hoursText);
 
         mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
-        /*setHoursInfo();
-        wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
-
-        wageText.setText("Wage:\n$"+df.format(wage));
-        totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
-        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
-        for(int n=0;n<hours.size();n+=2){
-            startHoursText.append(hours.get(n)+"\n");
-            stopHoursText.append(hours.get(n+1)+"\n");
-            hoursText.append(timeToHours(hours,n)+"\n");
-            datesText.append(days.get(n/2)+"\n");
-        }
-        lastHour=hours.size()-1;*/
         updateAll();
 
         addButton.setOnClickListener(new View.OnClickListener(){
@@ -207,19 +192,6 @@ public class MainActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                /*setHoursInfo();
-                wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
-
-                wageText.setText("Wage:\n$"+df.format(wage));
-                totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
-                totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
-                for(int n=lastHour;n<hours.size();n+=2){
-                    startHoursText.append(hours.get(n)+"\n");
-                    stopHoursText.append(hours.get(n+1)+"\n");
-                    hoursText.append(timeToHours(hours,n)+"\n");
-                    datesText.append(days.get(n/2)+"\n");
-                }
-                lastHour=hours.size()-1;*/
                 updateAll();
             }
         });
