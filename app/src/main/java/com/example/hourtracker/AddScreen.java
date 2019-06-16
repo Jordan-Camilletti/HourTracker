@@ -47,7 +47,6 @@ public class AddScreen extends AppCompatActivity {
                 sb.append(text);
             }
             return(sb);
-            //String rtn[]=(sb.toString().split(" |\\\n"));
         }catch(FileNotFoundException e){
             e.printStackTrace();
         }catch(IOException e){
@@ -88,7 +87,6 @@ public class AddScreen extends AppCompatActivity {
         wageSetButton=(Button) findViewById(R.id.wageSetButton);
         backButton=(Button) findViewById(R.id.backButton);
 
-        https://www.youtube.com/watch?v=3Zrwi3FFrC8
         mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         mEditor=mPreferences.edit();
 
@@ -101,26 +99,6 @@ public class AddScreen extends AppCompatActivity {
                 rtn+=dateInput.getText().toString()+"\n";
 
                 appendHours(rtn);
-                /*FileOutputStream fos=null;
-                try{
-                    fos=openFileOutput(FILE_NAME,Context.MODE_PRIVATE);
-                    fos.write((readFile().toString()+rtn).getBytes());
-                    fos.close();
-                    System.out.println("Saved to "+getFilesDir()+"/"+FILE_NAME);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }*/
-
-                /*try {
-                    BufferedWriter writer = new BufferedWriter(
-                                                new FileWriter(FILE_NAME, true)
-                                            );
-                    writer.newLine();
-                    writer.write(rtn);
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
             }
         });
 
