@@ -1,6 +1,7 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -127,14 +129,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateAll(){
-        /*try{
-            FileOutputStream fos=openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            fos.write("12:30 19:00 2019-05-04 13:00 17:00 2019-05-11 ".getBytes());
-            fos.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }*/
-
         //TODO: Fix bug involving not all hours printing out
         //TODO: clean up the major mess we made her at 1:00 AM
         //(Sorry future me, from: past 1:00 AM me)
@@ -148,14 +142,15 @@ public class MainActivity extends AppCompatActivity {
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+
+        startHoursText.setText("Start Hours:\n");
+        stopHoursText.setText("Stop Hours:\n");
+        hoursText.setText("Hours:\n");
+        datesText.setText("Dates:\n");
         for(int n=0;n<hours.size();n+=2){
-            startHoursText.setText("Start Hours:\n");
             startHoursText.append(hours.get(n)+"\n");
-            stopHoursText.setText("Stop Hours:\n");
             stopHoursText.append(hours.get(n+1)+"\n");
-            hoursText.setText("Hours:\n");
             hoursText.append(timeToHours(hours,n)+"\n");
-            datesText.setText("Dates:\n");
             datesText.append(days.get(n/2)+"\n");
         }
     }
