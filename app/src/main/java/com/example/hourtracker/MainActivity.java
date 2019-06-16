@@ -21,10 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO 1: Have days, dayHours, and wage read/write to a file
-//https://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android Writing
 //TODO 2: Create system for removing hours
-//TODO 3: setup 2nd screen for changing wage, seeing hours, etc
 
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
