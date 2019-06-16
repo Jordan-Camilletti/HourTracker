@@ -9,14 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
 
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
@@ -31,11 +25,10 @@ public class AddScreen extends AppCompatActivity {
     private Button addHours;
     private Button wageSetButton;
     private Button backButton;
-    private BigDecimal newWage=new BigDecimal("12.50");//Wage I'm paid;
 
     private Context context=this;
 
-    public StringBuilder readFile(){
+    /*public StringBuilder readFile(){
         FileInputStream fis=null;
         try{
             fis=openFileInput(FILE_NAME);
@@ -61,7 +54,7 @@ public class AddScreen extends AppCompatActivity {
             }
         }
         return(new StringBuilder("WHY"));
-    }
+    }*/
 
     public void appendHours(String add){
         String filePath=context.getFilesDir().getPath()+"/"+FILE_NAME;
@@ -106,7 +99,6 @@ public class AddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 wageInput=(EditText) findViewById(R.id.wageInput);
-                newWage=new BigDecimal(wageInput.getText().toString());
                 mEditor.putString("Wage",wageInput.getText().toString());
                 mEditor.commit();
                 wageInput.getText().clear();
