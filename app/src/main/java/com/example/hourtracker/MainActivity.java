@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView startHoursText;
     private TextView stopHoursText;
     private TextView hoursText;
-    private int lastHour=0;
 
     private SharedPreferences mPreferences;
 
@@ -52,25 +51,10 @@ public class MainActivity extends AppCompatActivity {
     private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
 
     public void setHoursInfo(){
+        //This is used to get hour info from "hours.txt"
+        //Everything after the for-loop is simply there to stop error messages
         hours=new ArrayList<>();
         days=new ArrayList<>();
-        /*try{
-            InputStream is=getAssets().open("hours.txt");
-            int size=is.available();
-            byte[] buffer=new byte[size];
-            is.read(buffer);
-            is.close();
-            String rtn[]=(new String(buffer)).split(" |\\\n");
-            for(int n=0;n<rtn.length;n++){
-                if((n+1)%3==0){//days
-                    days.add(rtn[n]);
-                }else{//hours
-                    hours.add(rtn[n]);
-                }
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }*/
         FileInputStream fis=null;
         try{
             fis=openFileInput(FILE_NAME);
@@ -81,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             while((text=br.readLine())!=null){
                 sb.append(text);
             }
-            String rtn[]=(sb.toString().split(" |\\\n"));
+            String rtn[]=(sb.toString().split(" |\\\n"));//Splitting the data into days array and hours array
             for(int n=0;n<rtn.length;n++){
                 if((n+1)%3==0){//days
                     days.add(rtn[n]);
@@ -119,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public BigDecimal getTotalHours(ArrayList<String> hours){
+        //Calculates the total hours from the hours array
         BigDecimal sum=new BigDecimal("0");
         for(int n=0;n<hours.size()/2;n++){
             sum=sum.add(timeToHours(hours,n*2));
@@ -127,9 +112,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateAll(){
-        //TODO: Fix bug involving not all hours printing out
-        //TODO: clean up the major mess we made her at 1:00 AM
-        //(Sorry future me, from: past 1:00 AM me)
+        //This updates all of the info on the main screen
+        //It updates the wage, hours worked per day, total hours worked, and total owed
         setHoursInfo();
 
         System.out.println(days.toString());
