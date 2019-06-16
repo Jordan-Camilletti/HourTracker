@@ -1,6 +1,7 @@
 package com.example.hourtracker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             while((text=br.readLine())!=null){
                 sb.append(text);
             }
-            String rtn[]=(sb.toString().split(" |\\\n"));//Splitting the data into days array and hours array
+            String rtn[]=(sb.toString().split(" "));
             for(int n=0;n<rtn.length;n++){
                 if((n+1)%3==0){//days
                     days.add(rtn[n]);
@@ -108,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
         return(sum);
     }
 
+    public void resetFile(String FILE_NAME){//Used to reset the contents of "hours.txt" because I'm an idiot
+        try{
+            FileOutputStream fos=openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write("00:00 00:00 0000-00-00 ".getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void updateAll(){
         //This updates all of the info on the main screen
         //It updates the wage, hours worked per day, total hours worked, and total owed
@@ -126,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         stopHoursText.setText("Stop Hours:\n");
         hoursText.setText("Hours:\n");
         datesText.setText("Dates:\n");
-        for(int n=0;n<hours.size();n+=2){
+        for(int n=2;n<hours.size();n+=2){
             startHoursText.append(hours.get(n)+"\n");
             stopHoursText.append(hours.get(n+1)+"\n");
             hoursText.append(timeToHours(hours,n)+"\n");
@@ -137,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        resetFile(FILE_NAME);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

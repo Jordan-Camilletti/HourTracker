@@ -28,34 +28,6 @@ public class AddScreen extends AppCompatActivity {
 
     private Context context=this;
 
-    /*public StringBuilder readFile(){
-        FileInputStream fis=null;
-        try{
-            fis=openFileInput(FILE_NAME);
-            InputStreamReader isr=new InputStreamReader(fis);
-            BufferedReader br=new BufferedReader(isr);
-            StringBuilder sb=new StringBuilder();
-            String text="";
-            while((text=br.readLine())!=null){
-                sb.append(text);
-            }
-            return(sb);
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }finally{
-            if(fis!=null){
-                try {
-                    fis.close();
-                }catch(IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        return(new StringBuilder("WHY"));
-    }*/
-
     public void appendHours(String add){
         String filePath=context.getFilesDir().getPath()+"/"+FILE_NAME;
         File file=new File(filePath);
@@ -88,9 +60,11 @@ public class AddScreen extends AppCompatActivity {
             public void onClick(View v) {
                 String rtn="";
                 rtn+=startTimeInput.getText().toString()+" ";
+                startTimeInput.getText().clear();
                 rtn+=stopTimeInput.getText().toString()+" ";
-                rtn+=dateInput.getText().toString()+"\n";
-
+                stopTimeInput.getText().clear();
+                rtn+=dateInput.getText().toString()+" ";
+                dateInput.getText().clear();
                 appendHours(rtn);
             }
         });
