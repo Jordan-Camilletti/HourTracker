@@ -24,6 +24,7 @@ public class RemoveScreen extends AppCompatActivity {
         }
     }
 
+    //TODO: Add button(s) for total file clear
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
