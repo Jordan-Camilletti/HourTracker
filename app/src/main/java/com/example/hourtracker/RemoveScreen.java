@@ -5,12 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 import java.io.FileOutputStream;
 
 public class RemoveScreen extends AppCompatActivity {
-    private SharedPreferences mPreferences;
-    private SharedPreferences.Editor mEditor;
+
+    private Button backButton;
 
     private String FILE_NAME="hours.txt";
 
@@ -29,8 +30,6 @@ public class RemoveScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
 
-        //https://www.youtube.com/watch?v=3Zrwi3FFrC8
-        mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor=mPreferences.edit();
+        backButton=(Button) findViewById(R.id.backButton);
     }
 }
