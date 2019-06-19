@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 public class RemoveScreen extends AppCompatActivity {
 
     private Button backButton;
+    private Button clearAllButton;
 
     private String FILE_NAME="hours.txt";
 
@@ -32,6 +33,7 @@ public class RemoveScreen extends AppCompatActivity {
         setContentView(R.layout.activity_remove);
 
         backButton=(Button) findViewById(R.id.backButton);
+        clearAllButton=(Button) findViewById(R.id.clearAllButton);
 
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -39,5 +41,7 @@ public class RemoveScreen extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 }
