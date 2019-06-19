@@ -1,9 +1,7 @@
 package com.example.hourtracker;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +48,13 @@ public class RemoveScreen extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 resetFile(FILE_NAME);
+            }
+        });
+
+        removeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
