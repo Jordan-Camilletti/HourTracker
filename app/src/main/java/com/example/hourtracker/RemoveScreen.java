@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 
 import java.io.FileOutputStream;
@@ -31,5 +32,12 @@ public class RemoveScreen extends AppCompatActivity {
         setContentView(R.layout.activity_remove);
 
         backButton=(Button) findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
