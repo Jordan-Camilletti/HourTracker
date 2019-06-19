@@ -42,6 +42,11 @@ public class RemoveScreen extends AppCompatActivity {
             }
         });
 
-
+        clearAllButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                resetFile(FILE_NAME);
+            }
+        });
     }
 }
