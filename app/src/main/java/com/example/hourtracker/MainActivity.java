@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
 
     public BigDecimal timeToHours(ArrayList<String> hours, int index){
