@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,6 +27,7 @@ public class RemoveScreen extends AppCompatActivity {
     private Button clearAllButton;
     private Button removeButton;
     private EditText paidInput;
+    private TextView leftover;
 
     private SharedPreferences mPreferences;
     private MainActivity mainAc=new MainActivity();
@@ -35,12 +38,30 @@ public class RemoveScreen extends AppCompatActivity {
     private ArrayList<String> hours;
     private ArrayList<String> days;
 
+    public String arrsToString(ArrayList<String> h,ArrayList<String> d){
+        String rtn="";
+        for(int n=0;n<hours.size();n+=2){
+            rtn=rtn+hours.get(n)+" "+hours.get(n+1)+" "+days.get(n/2)+" ";
+        }
+        return(rtn);
+    }
+
     public void resetFile(String FILE_NAME) {//Used to reset the contents of "hours.txt" because I'm an idiot
         try {
             FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             fos.write("00:00 00:00 0000-00-00 ".getBytes());
             fos.close();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeNewHours(String FILE_NAME){
+        try {
+            FileOutputStream fos= openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(arrsToString(hours,days).getBytes());
+            fos.close();
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -92,6 +113,7 @@ public class RemoveScreen extends AppCompatActivity {
         clearAllButton=(Button) findViewById(R.id.clearAllButton);
         removeButton=(Button) findViewById(R.id.removeButton);
         paidInput=(EditText) findViewById(R.id.paidInput);
+        leftover=(TextView) findViewById(R.id.leftover);
 
         mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -127,8 +149,14 @@ public class RemoveScreen extends AppCompatActivity {
                         hours.remove(n);
                         n-=2;
                     }
-                    System.out.println(mainAc.timeToHours(hours,n));
+                    //System.out.println(mainAc.timeToHours(hours,n));
                 }
+                if(hoursPaid.compareTo(new BigDecimal("0.0"))!=0){
+                    leftover.setText(hoursPaid+" hours leftover");
+                }else{
+                    leftover.setText("No leftover hours");
+                }
+                writeNewHours(FILE_NAME);
             }
         });
 
