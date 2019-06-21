@@ -48,44 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> days=new ArrayList<>();//Days worked
     private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
 
-    public String[] readTest(File file){
-        FileInputStream fis=null;
-        try{
-            fis=new FileInputStream(file);
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        InputStreamReader isr=new InputStreamReader(fis);
-        BufferedReader br=new BufferedReader(isr);
-
-        String test;
-        int anzahl=0;
-        try {
-            while((test=br.readLine()) != null) {
-                anzahl++;
-            }
-        }
-        catch (IOException e) {e.printStackTrace();}
-        try {
-            fis.getChannel().position(0);
-        }
-        catch (IOException e) {e.printStackTrace();}
-
-        String[] arr = new String[anzahl];
-        String line;
-        int i = 0;
-        try {
-            while((line=br.readLine())!=null) {
-                arr[i] = line;
-                i++;
-            }
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        return(arr);
-    }
-
     public void setHoursInfo(){
         //This is used to get hour info from "hours.txt"
         //Everything after the for-loop is simply there to stop error messages

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RemoveScreen extends AppCompatActivity {
-
     private Button backButton;
     private Button clearAllButton;
     private Button removeButton;
