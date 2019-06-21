@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -117,7 +116,6 @@ public class RemoveScreen extends AppCompatActivity {
 
         mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
-        //mainAc.setHoursInfo();
         setHoursInfo();
 
         backButton.setOnClickListener(new View.OnClickListener(){

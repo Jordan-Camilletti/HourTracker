@@ -25,8 +25,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO 2: Create system for removing hours
-
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
