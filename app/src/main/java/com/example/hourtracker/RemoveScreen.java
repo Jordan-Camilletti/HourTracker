@@ -8,8 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RemoveScreen extends AppCompatActivity {
 
@@ -17,16 +27,81 @@ public class RemoveScreen extends AppCompatActivity {
     private Button clearAllButton;
     private Button removeButton;
     private EditText paidInput;
+    private TextView leftover;
 
+    private SharedPreferences mPreferences;
+    private MainActivity mainAc=new MainActivity();
+
+    private BigDecimal hoursPaid=new BigDecimal("0.0");
+    private BigDecimal wage=new BigDecimal("12.50");
     private String FILE_NAME="hours.txt";
+    private ArrayList<String> hours;
+    private ArrayList<String> days;
 
-    public void resetFile(String FILE_NAME){//Used to reset the contents of "hours.txt" because I'm an idiot
-        try{
-            FileOutputStream fos=openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+    public String arrsToString(ArrayList<String> h,ArrayList<String> d){
+        String rtn="";
+        for(int n=0;n<hours.size();n+=2){
+            rtn=rtn+hours.get(n)+" "+hours.get(n+1)+" "+days.get(n/2)+" ";
+        }
+        return(rtn);
+    }
+
+    public void resetFile(String FILE_NAME) {//Used to reset the contents of "hours.txt" because I'm an idiot
+        try {
+            FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             fos.write("00:00 00:00 0000-00-00 ".getBytes());
             fos.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void writeNewHours(String FILE_NAME){
+        try {
+            FileOutputStream fos= openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(arrsToString(hours,days).getBytes());
+            fos.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setHoursInfo(){
+        //This is used to get hour info from "hours.txt"
+        //Everything after the for-loop is simply there to stop error messages
+        hours=new ArrayList<>();
+        days=new ArrayList<>();
+        FileInputStream fis=null;
+        try{
+            fis=openFileInput(FILE_NAME);
+            InputStreamReader isr=new InputStreamReader(fis);
+            BufferedReader br=new BufferedReader(isr);
+            StringBuilder sb=new StringBuilder();
+            String text="";
+            while((text=br.readLine())!=null){
+                sb.append(text);
+            }
+            String rtn[]=(sb.toString().split(" "));
+            for(int n=0;n<rtn.length;n++){
+                if((n+1)%3==0){//days
+                    days.add(rtn[n]);
+                }else{//hours
+                    hours.add(rtn[n]);
+                }
+            }
+            System.out.println(Arrays.toString(rtn));
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            if(fis!=null){
+                try {
+                    fis.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -38,6 +113,12 @@ public class RemoveScreen extends AppCompatActivity {
         clearAllButton=(Button) findViewById(R.id.clearAllButton);
         removeButton=(Button) findViewById(R.id.removeButton);
         paidInput=(EditText) findViewById(R.id.paidInput);
+        leftover=(TextView) findViewById(R.id.leftover);
+
+        mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+
+        //mainAc.setHoursInfo();
+        setHoursInfo();
 
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,5 +133,32 @@ public class RemoveScreen extends AppCompatActivity {
                 resetFile(FILE_NAME);
             }
         });
+
+        removeButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
+                hoursPaid=new BigDecimal(paidInput.getText().toString());
+                hoursPaid=hoursPaid.divide(wage);
+                System.out.println(hoursPaid);
+                for(int n=2;n<hours.size();n+=2){
+                    if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)!=1){
+                        hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
+                        days.remove(n/2);
+                        hours.remove(n+1);
+                        hours.remove(n);
+                        n-=2;
+                    }
+                    //System.out.println(mainAc.timeToHours(hours,n));
+                }
+                if(hoursPaid.compareTo(new BigDecimal("0.0"))!=0){
+                    leftover.setText(hoursPaid+" hours leftover");
+                }else{
+                    leftover.setText("No leftover hours");
+                }
+                writeNewHours(FILE_NAME);
+            }
+        });
+
     }
 }

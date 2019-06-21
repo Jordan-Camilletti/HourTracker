@@ -10,4 +10,8 @@
     <string name="dates">Dates:\n</string>
     <string name="startHours">Start Hours:\n</string>
     <string name="stopHours">Stop Hours:\n</string>
+    <string name="back">Back</string>
+    <string name="clearAll">CLEAR ALL</string>
+    <string name="amountPaid">Amount Paid</string>
+    <string name="leftover">Leftover Hours</string>
 </resources>
