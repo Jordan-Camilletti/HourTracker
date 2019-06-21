@@ -28,10 +28,7 @@ import java.util.Arrays;
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
-
     private static final String FILE_NAME="hours.txt";
-    private String path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/hourTracker";
-    private File hoursFile=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/hourTracker/hours.txt");
 
     private Button addButton;
     private Button removeButton;
@@ -147,16 +144,6 @@ public class MainActivity extends AppCompatActivity {
             sum=sum.add(timeToHours(hours,n*2));
         }
         return(sum);
-    }
-
-    public void resetFile(String FILE_NAME){//Used to reset the contents of "hours.txt" because I'm an idiot
-        try{
-            FileOutputStream fos=openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            fos.write("00:00 00:00 0000-00-00 ".getBytes());
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void updateAll(){
