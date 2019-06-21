@@ -35,6 +35,16 @@ public class RemoveScreen extends AppCompatActivity {
     private ArrayList<String> hours;
     private ArrayList<String> days;
 
+    public void resetFile(String FILE_NAME) {//Used to reset the contents of "hours.txt" because I'm an idiot
+        try {
+            FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write("00:00 00:00 0000-00-00 ".getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setHoursInfo(){
         //This is used to get hour info from "hours.txt"
         //Everything after the for-loop is simply there to stop error messages
@@ -74,16 +84,6 @@ public class RemoveScreen extends AppCompatActivity {
         }
     }
 
-    public void resetFile(String FILE_NAME) {//Used to reset the contents of "hours.txt" because I'm an idiot
-        try {
-            FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            fos.write("00:00 00:00 0000-00-00 ".getBytes());
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
@@ -94,7 +94,9 @@ public class RemoveScreen extends AppCompatActivity {
         paidInput=(EditText) findViewById(R.id.paidInput);
 
         mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-        System.out.println(mainAc.getTotalHours(hours));
+
+        //mainAc.setHoursInfo();
+        setHoursInfo();
 
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -113,11 +115,20 @@ public class RemoveScreen extends AppCompatActivity {
         removeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setHoursInfo();
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
                 hoursPaid=new BigDecimal(paidInput.getText().toString());
                 hoursPaid=hoursPaid.divide(wage);
                 System.out.println(hoursPaid);
+                for(int n=2;n<hours.size();n+=2){
+                    if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)!=1){
+                        hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
+                        days.remove(n/2);
+                        hours.remove(n+1);
+                        hours.remove(n);
+                        n-=2;
+                    }
+                    System.out.println(mainAc.timeToHours(hours,n));
+                }
             }
         });
 

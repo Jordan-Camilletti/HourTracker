@@ -3,6 +3,7 @@ package com.example.hourtracker;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,10 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
+    private File hoursFile=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/hourTracker/hours.txt");
+
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;

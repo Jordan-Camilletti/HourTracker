@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
 
     private static final String FILE_NAME="hours.txt";
+    private String path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/hourTracker";
+    private File hoursFile=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/hourTracker/hours.txt");
 
     private Button addButton;
     private Button removeButton;
@@ -48,6 +52,44 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
     private ArrayList<String> days=new ArrayList<>();//Days worked
     private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
+
+    public String[] readTest(File file){
+        FileInputStream fis=null;
+        try{
+            fis=new FileInputStream(file);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        InputStreamReader isr=new InputStreamReader(fis);
+        BufferedReader br=new BufferedReader(isr);
+
+        String test;
+        int anzahl=0;
+        try {
+            while((test=br.readLine()) != null) {
+                anzahl++;
+            }
+        }
+        catch (IOException e) {e.printStackTrace();}
+        try {
+            fis.getChannel().position(0);
+        }
+        catch (IOException e) {e.printStackTrace();}
+
+        String[] arr = new String[anzahl];
+        String line;
+        int i = 0;
+        try {
+            while((line=br.readLine())!=null) {
+                arr[i] = line;
+                i++;
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return(arr);
+    }
 
     public void setHoursInfo(){
         //This is used to get hour info from "hours.txt"
