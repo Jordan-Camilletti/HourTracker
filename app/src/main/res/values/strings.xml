@@ -13,4 +13,5 @@
     <string name="back">Back</string>
     <string name="clearAll">CLEAR ALL</string>
     <string name="amountPaid">Amount Paid</string>
+    <string name="leftover">Leftover Hours</string>
 </resources>
