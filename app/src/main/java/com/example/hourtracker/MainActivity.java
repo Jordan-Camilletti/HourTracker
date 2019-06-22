@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addButton=findViewById(R.id.addButton);
+        addButton=findViewById(R.id.addButton);//Setting all layout items
         removeButton=findViewById(R.id.removeButton);
         updateButton=findViewById(R.id.updateButton);
         wageText=findViewById(R.id.wageText);

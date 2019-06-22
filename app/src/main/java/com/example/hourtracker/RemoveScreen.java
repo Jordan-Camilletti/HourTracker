@@ -28,7 +28,7 @@ public class RemoveScreen extends AppCompatActivity {
     private TextView leftover;
 
     private SharedPreferences mPreferences;
-    private MainActivity mainAc=new MainActivity();
+    private MainActivity mainAc=new MainActivity();//Used to reference methods from MainActivity
 
     private BigDecimal hoursPaid=new BigDecimal("0.0");
     private BigDecimal wage=new BigDecimal("12.50");
@@ -37,6 +37,7 @@ public class RemoveScreen extends AppCompatActivity {
     private ArrayList<String> days;
 
     public String arrsToString(ArrayList<String> h,ArrayList<String> d){
+        //Turns the contents of hours and days ArrayLists into a string formatted properly for hours.txt
         String rtn="";
         for(int n=0;n<hours.size();n+=2){
             rtn=rtn+hours.get(n)+" "+hours.get(n+1)+" "+days.get(n/2)+" ";
@@ -44,20 +45,16 @@ public class RemoveScreen extends AppCompatActivity {
         return(rtn);
     }
 
-    public void resetFile(String FILE_NAME) {//Used to reset the contents of "hours.txt" because I'm an idiot
-        try {
-            FileOutputStream fos = openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            fos.write("00:00 00:00 0000-00-00 ".getBytes());
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void writeNewHours(String FILE_NAME){
+    public void writeNewHours(String FILE_NAME, boolean reset){
+        //Writes the new contents of hours and days ArrayLists into FILE_NAME
+        //Also used to reset the contents of "hours.txt" if 'reset' if true because I'm an idiot
         try {
             FileOutputStream fos= openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            fos.write(arrsToString(hours,days).getBytes());
+            if(reset){
+                fos.write("00:00 00:00 0000-00-00 ".getBytes());
+            }else {
+                fos.write(arrsToString(hours, days).getBytes());
+            }
             fos.close();
         } catch (Exception e){
             e.printStackTrace();
@@ -127,7 +124,7 @@ public class RemoveScreen extends AppCompatActivity {
         clearAllButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                resetFile(FILE_NAME);
+                writeNewHours(FILE_NAME,true);
             }
         });
 
