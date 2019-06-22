@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
