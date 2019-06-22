@@ -117,14 +117,14 @@ public class RemoveScreen extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                finish();
+                finish();//Returns back to main screen
             }
         });
 
         clearAllButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                writeNewHours(FILE_NAME,true);
+                writeNewHours(FILE_NAME,true);//Clears the file
             }
         });
 
@@ -133,8 +133,10 @@ public class RemoveScreen extends AppCompatActivity {
             public void onClick(View v) {
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
                 hoursPaid=new BigDecimal(paidInput.getText().toString());
-                hoursPaid=hoursPaid.divide(wage);
+                hoursPaid=hoursPaid.divide(wage);//Calculating hours owed via the wage and $ owed
                 System.out.println(hoursPaid);
+                //Removes a date if it's total hours is less than the current owed
+                //If there's any hours owed left after all dates are checked then the left is displayed as leftover hours
                 for(int n=2;n<hours.size();n+=2){
                     if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)!=1){
                         hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
@@ -150,7 +152,7 @@ public class RemoveScreen extends AppCompatActivity {
                 }else{
                     leftover.setText("No leftover hours");
                 }
-                writeNewHours(FILE_NAME);
+                writeNewHours(FILE_NAME,false);
             }
         });
 
