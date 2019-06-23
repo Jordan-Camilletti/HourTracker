@@ -104,11 +104,11 @@ public class RemoveScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
 
-        backButton=(Button) findViewById(R.id.backButton);
-        clearAllButton=(Button) findViewById(R.id.clearAllButton);
-        removeButton=(Button) findViewById(R.id.removeButton);
-        paidInput=(EditText) findViewById(R.id.paidInput);
-        leftover=(TextView) findViewById(R.id.leftover);
+        backButton = findViewById(R.id.backButton);
+        clearAllButton = findViewById(R.id.clearAllButton);
+        removeButton = findViewById(R.id.removeButton);
+        paidInput = findViewById(R.id.paidInput);
+        leftover = findViewById(R.id.leftover);
 
         mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 

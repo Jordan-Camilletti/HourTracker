@@ -44,13 +44,13 @@ public class AddScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        wageInput=(EditText) findViewById(R.id.wageInput);
-        startTimeInput=(EditText) findViewById(R.id.startTimeInput);
-        stopTimeInput=(EditText) findViewById(R.id.stopTimeInput);
-        dateInput=(EditText) findViewById(R.id.dateInput);
-        addHours=(Button) findViewById(R.id.addHours);
-        wageSetButton=(Button) findViewById(R.id.wageSetButton);
-        backButton=(Button) findViewById(R.id.backButton);
+        wageInput = findViewById(R.id.wageInput);
+        startTimeInput = findViewById(R.id.startTimeInput);
+        stopTimeInput = findViewById(R.id.stopTimeInput);
+        dateInput = findViewById(R.id.dateInput);
+        addHours = findViewById(R.id.addHours);
+        wageSetButton = findViewById(R.id.wageSetButton);
+        backButton = findViewById(R.id.backButton);
 
         mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         mEditor=mPreferences.edit();
