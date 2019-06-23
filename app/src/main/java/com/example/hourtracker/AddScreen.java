@@ -3,7 +3,6 @@ package com.example.hourtracker;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,8 +14,6 @@ import java.io.FileWriter;
 
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
-    private File hoursFile=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/hourTracker/hours.txt");
-
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -65,7 +62,7 @@ public class AddScreen extends AppCompatActivity {
                 rtn+=startTimeInput.getText().toString()+" ";
                 startTimeInput.getText().clear();
                 if(Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))<9){//Time is in PM form
-                    rtn+=Integer.toString(Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))+12)+" ";
+                    rtn+=Integer.toString(Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))+12)+stopTimeInput.getText().toString().substring(2)+" ";
                 }else{
                     rtn+=stopTimeInput.getText().toString()+" ";
                 }
@@ -79,7 +76,7 @@ public class AddScreen extends AppCompatActivity {
         wageSetButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                wageInput=(EditText) findViewById(R.id.wageInput);
+                wageInput=findViewById(R.id.wageInput);
                 mEditor.putString("Wage",wageInput.getText().toString());
                 mEditor.commit();
                 wageInput.getText().clear();
