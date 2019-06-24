@@ -62,7 +62,7 @@ public class AddScreen extends AppCompatActivity {
                 rtn+=startTimeInput.getText().toString()+" ";
                 startTimeInput.getText().clear();
                 if(Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))<9){//Time is in PM form
-                    rtn+=Integer.toString(Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))+12)+stopTimeInput.getText().toString().substring(2)+" ";
+                    rtn+=Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))+12+stopTimeInput.getText().toString().substring(2)+" ";
                 }else{
                     rtn+=stopTimeInput.getText().toString()+" ";
                 }

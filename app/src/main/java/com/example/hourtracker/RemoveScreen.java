@@ -72,7 +72,7 @@ public class RemoveScreen extends AppCompatActivity {
             InputStreamReader isr=new InputStreamReader(fis);
             BufferedReader br=new BufferedReader(isr);
             StringBuilder sb=new StringBuilder();
-            String text="";
+            String text;
             while((text=br.readLine())!=null){
                 sb.append(text);
             }

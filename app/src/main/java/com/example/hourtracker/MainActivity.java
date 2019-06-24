@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private DecimalFormat df=new DecimalFormat("0.00");
     private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
     private ArrayList<String> days=new ArrayList<>();//Days worked
-    private BigDecimal wage=new BigDecimal("12.50");//Wage I'm paid
+
 
     public void setHoursInfo(){
         //This is used to get hour info from "hours.txt"
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             InputStreamReader isr=new InputStreamReader(fis);
             BufferedReader br=new BufferedReader(isr);
             StringBuilder sb=new StringBuilder();
-            String text="";
+            String text;
             while((text=br.readLine())!=null){
                 sb.append(text);
             }
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(days.toString());
         System.out.println(hours.toString());
 
-        wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
+        BigDecimal wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
 
         wageText.setText("Wage:\n$"+df.format(wage));
         totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
