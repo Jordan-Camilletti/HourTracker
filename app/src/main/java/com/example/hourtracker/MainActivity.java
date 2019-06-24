@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout activity_main;
     private static final String FILE_NAME="hours.txt";
 
-    private Button addButton;
-    private Button removeButton;
-    private Button updateButton;
     private TextView wageText;
     private TextView totHourText;
     private TextView totOwedText;
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             while((text=br.readLine())!=null){
                 sb.append(text);
             }
-            String rtn[]=(sb.toString().split(" "));
+            String[] rtn=(sb.toString().split(" "));
             for(int n=0;n<rtn.length;n++){
                 if((n+1)%3==0){//days
                     days.add(rtn[n]);
@@ -104,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         return(sum);
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateAll(){
         //This updates all of the info on the main screen
         //It updates the wage, hours worked per day, total hours worked, and total owed
@@ -136,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addButton=findViewById(R.id.addButton);//Setting all layout items
-        removeButton=findViewById(R.id.removeButton);
-        updateButton=findViewById(R.id.updateButton);
+        Button addButton=findViewById(R.id.addButton);//Setting all layout items
+        Button removeButton=findViewById(R.id.removeButton);
+        Button updateButton=findViewById(R.id.updateButton);
         wageText=findViewById(R.id.wageText);
         totHourText=findViewById(R.id.totHourText);
         totOwedText=findViewById(R.id.totOwedText);

@@ -15,16 +15,16 @@ import java.io.FileWriter;
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
 
-    private SharedPreferences mPreferences;
+    //private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
     private EditText wageInput;
     private EditText startTimeInput;
     private EditText stopTimeInput;
     private EditText dateInput;
-    private Button addHours;
-    private Button wageSetButton;
-    private Button backButton;
+    //private Button addHours;
+    //private Button wageSetButton;
+    //private Button backButton;
 
     private Context context=this;
 
@@ -48,11 +48,11 @@ public class AddScreen extends AppCompatActivity {
         startTimeInput = findViewById(R.id.startTimeInput);
         stopTimeInput = findViewById(R.id.stopTimeInput);
         dateInput = findViewById(R.id.dateInput);
-        addHours = findViewById(R.id.addHours);
-        wageSetButton = findViewById(R.id.wageSetButton);
-        backButton = findViewById(R.id.backButton);
+        Button addHours = findViewById(R.id.addHours);
+        Button wageSetButton = findViewById(R.id.wageSetButton);
+        Button backButton = findViewById(R.id.backButton);
 
-        mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences mPreferences=PreferenceManager.getDefaultSharedPreferences(this);
         mEditor=mPreferences.edit();
 
         addHours.setOnClickListener(new View.OnClickListener() {

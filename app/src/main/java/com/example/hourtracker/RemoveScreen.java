@@ -1,5 +1,6 @@
 package com.example.hourtracker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class RemoveScreen extends AppCompatActivity {
-    private Button backButton;
-    private Button clearAllButton;
-    private Button removeButton;
+    //private Button backButton;
+    //private Button clearAllButton;
+    //private Button removeButton;
     private EditText paidInput;
     private TextView leftover;
 
@@ -39,8 +40,8 @@ public class RemoveScreen extends AppCompatActivity {
     public String arrsToString(ArrayList<String> h,ArrayList<String> d){
         //Turns the contents of hours and days ArrayLists into a string formatted properly for hours.txt
         String rtn="";
-        for(int n=0;n<hours.size();n+=2){
-            rtn=rtn+hours.get(n)+" "+hours.get(n+1)+" "+days.get(n/2)+" ";
+        for(int n=0;n<h.size();n+=2){
+            rtn=rtn+h.get(n)+" "+h.get(n+1)+" "+d.get(n/2)+" ";
         }
         return(rtn);
     }
@@ -76,7 +77,7 @@ public class RemoveScreen extends AppCompatActivity {
             while((text=br.readLine())!=null){
                 sb.append(text);
             }
-            String rtn[]=(sb.toString().split(" "));
+            String[] rtn=(sb.toString().split(" "));
             for(int n=0;n<rtn.length;n++){
                 if((n+1)%3==0){//days
                     days.add(rtn[n]);
@@ -104,9 +105,9 @@ public class RemoveScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
 
-        backButton = findViewById(R.id.backButton);
-        clearAllButton = findViewById(R.id.clearAllButton);
-        removeButton = findViewById(R.id.removeButton);
+        Button backButton = findViewById(R.id.backButton);
+        Button clearAllButton = findViewById(R.id.clearAllButton);
+        Button removeButton = findViewById(R.id.removeButton);
         paidInput = findViewById(R.id.paidInput);
         leftover = findViewById(R.id.leftover);
 
@@ -129,6 +130,7 @@ public class RemoveScreen extends AppCompatActivity {
         });
 
         removeButton.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
