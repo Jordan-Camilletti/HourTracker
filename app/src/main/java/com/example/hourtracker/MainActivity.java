@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
-    private ConstraintLayout activity_main;
+    //private ConstraintLayout activity_main;
     private static final String FILE_NAME="hours.txt";
 
     private TextView wageText;

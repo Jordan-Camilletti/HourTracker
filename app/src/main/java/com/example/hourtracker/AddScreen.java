@@ -78,7 +78,7 @@ public class AddScreen extends AppCompatActivity {
             public void onClick(View v){
                 wageInput=findViewById(R.id.wageInput);
                 mEditor.putString("Wage",wageInput.getText().toString());
-                mEditor.commit();
+                mEditor.apply();
                 wageInput.getText().clear();
             }
         });
