@@ -59,15 +59,25 @@ public class AddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String rtn="";
-                rtn+=startTimeInput.getText().toString()+" ";
-                startTimeInput.getText().clear();
-                if(Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))<9){//Time is in PM form
-                    rtn+=Integer.parseInt(stopTimeInput.getText().toString().substring(0,2))+12+stopTimeInput.getText().toString().substring(2)+" ";
-                }else{
-                    rtn+=stopTimeInput.getText().toString()+" ";
+                String startInput=startTimeInput.getText().toString();
+                String stopInput=stopTimeInput.getText().toString();
+                if(startInput.length()==4){
+                    startInput=startInput.substring(0,2)+":"+startInput.substring(2);
                 }
-                stopTimeInput.getText().clear();
+                System.out.print(startInput);
+                rtn+=startInput+" ";
+                if(stopInput.length()==4){
+                    stopInput=stopInput.substring(0,2)+":"+stopInput.substring(2);
+                }
+                if(Integer.parseInt(stopInput.substring(0,2))<9){//Time is in PM form
+                    rtn+=Integer.parseInt(stopInput.substring(0,2))+12+stopInput.substring(2)+" ";
+                }else{
+                    rtn+=stopInput+" ";
+                }
                 rtn+=dateInput.getText().toString()+" ";
+
+                startTimeInput.getText().clear();
+                stopTimeInput.getText().clear();
                 dateInput.getText().clear();
                 appendHours(rtn);
             }
