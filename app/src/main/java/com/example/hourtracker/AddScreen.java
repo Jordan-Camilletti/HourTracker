@@ -64,12 +64,15 @@ public class AddScreen extends AppCompatActivity {
                 if(startInput.length()==4){
                     startInput=startInput.substring(0,2)+":"+startInput.substring(2);
                 }
-                System.out.print(startInput);
-                rtn+=startInput+" ";
+                if(Integer.parseInt(startInput.substring(0,2))<8){//Time is in PM form
+                    rtn+=Integer.parseInt(startInput.substring(0,2))+12+startInput.substring(2)+" ";
+                }else{
+                    rtn+=startInput+" ";
+                }
                 if(stopInput.length()==4){
                     stopInput=stopInput.substring(0,2)+":"+stopInput.substring(2);
                 }
-                if(Integer.parseInt(stopInput.substring(0,2))<9){//Time is in PM form
+                if(Integer.parseInt(stopInput.substring(0,2))<8){//Time is in PM form
                     rtn+=Integer.parseInt(stopInput.substring(0,2))+12+stopInput.substring(2)+" ";
                 }else{
                     rtn+=stopInput+" ";
