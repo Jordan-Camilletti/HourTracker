@@ -40,6 +40,20 @@ public class AddScreen extends AppCompatActivity {
         }
     }
 
+    public String correctHour(String hour){
+        if((hour.contains(":") &hour.length()==4) || (!hour.contains(":") && hour.length()==3)){
+            hour="0"+hour;//Hour doesn't have :
+        }
+        if(!hour.contains(":")){//6:00 instead of 06:00
+            hour=hour.substring(0,2)+":"+hour.substring(2);
+        }
+        if(Integer.parseInt(hour.substring(0,2))<8){//Time is in PM form
+            return(Integer.parseInt(hour.substring(0,2))+12+hour.substring(2)+" ");
+        }else{
+            return(hour+" ");
+        }
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
@@ -59,24 +73,8 @@ public class AddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String rtn="";
-                String startInput=startTimeInput.getText().toString();
-                String stopInput=stopTimeInput.getText().toString();
-                if(startInput.length()==4){
-                    startInput=startInput.substring(0,2)+":"+startInput.substring(2);
-                }
-                if(Integer.parseInt(startInput.substring(0,2))<8){//Time is in PM form
-                    rtn+=Integer.parseInt(startInput.substring(0,2))+12+startInput.substring(2)+" ";
-                }else{
-                    rtn+=startInput+" ";
-                }
-                if(stopInput.length()==4){
-                    stopInput=stopInput.substring(0,2)+":"+stopInput.substring(2);
-                }
-                if(Integer.parseInt(stopInput.substring(0,2))<8){//Time is in PM form
-                    rtn+=Integer.parseInt(stopInput.substring(0,2))+12+stopInput.substring(2)+" ";
-                }else{
-                    rtn+=stopInput+" ";
-                }
+                rtn+=correctHour(startTimeInput.getText().toString());
+                rtn+=correctHour(stopTimeInput.getText().toString());
                 rtn+=dateInput.getText().toString()+" ";
 
                 startTimeInput.getText().clear();
