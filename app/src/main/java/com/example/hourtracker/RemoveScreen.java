@@ -88,7 +88,6 @@ public class RemoveScreen extends AppCompatActivity {
                     hours.add(rtn[n]);
                 }
             }
-            System.out.println(Arrays.toString(rtn));
         }catch(FileNotFoundException e){
             e.printStackTrace();
         }catch(IOException e){
