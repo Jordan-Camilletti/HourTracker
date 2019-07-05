@@ -141,8 +141,12 @@ public class RemoveScreen extends AppCompatActivity {
                 //Removes a date if it's total hours is less than the current owed
                 //If there's any hours owed left after all dates are checked then the left is displayed as leftover hours
                 for(int n=2;n<hours.size();n+=2){
+
+                    System.out.println(hoursPaid);
                     System.out.println(mainAc.timeToHours(hours,n));
-                    if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)>-1){
+                    System.out.println((mainAc.timeToHours(hours,n)).compareTo(hoursPaid));
+
+                    if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)<=0){
                         hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
                         days.remove(n/2);
                         hours.remove(n+1);
