@@ -22,9 +22,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class RemoveScreen extends AppCompatActivity {
-    //private Button backButton;
-    //private Button clearAllButton;
-    //private Button removeButton;
     private EditText paidInput;
     private TextView leftover;
 
@@ -158,6 +155,5 @@ public class RemoveScreen extends AppCompatActivity {
                 writeNewHours(FILE_NAME,false);
             }
         });
-
     }
 }

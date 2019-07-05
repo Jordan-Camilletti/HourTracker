@@ -22,9 +22,6 @@ public class AddScreen extends AppCompatActivity {
     private EditText startTimeInput;
     private EditText stopTimeInput;
     private EditText dateInput;
-    //private Button addHours;
-    //private Button wageSetButton;
-    //private Button backButton;
 
     private Context context=this;
 
@@ -100,7 +97,5 @@ public class AddScreen extends AppCompatActivity {
                 finish();//Switching to main screen
             }
         });
-
-
     }
 }

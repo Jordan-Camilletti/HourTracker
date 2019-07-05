@@ -18,7 +18,6 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
