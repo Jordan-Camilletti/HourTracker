@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RemoveScreen extends AppCompatActivity {
     //private Button backButton;
@@ -142,6 +141,7 @@ public class RemoveScreen extends AppCompatActivity {
                 //Removes a date if it's total hours is less than the current owed
                 //If there's any hours owed left after all dates are checked then the left is displayed as leftover hours
                 for(int n=2;n<hours.size();n+=2){
+                    System.out.println(mainAc.timeToHours(hours,n));
                     if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)>-1){
                         hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
                         days.remove(n/2);
