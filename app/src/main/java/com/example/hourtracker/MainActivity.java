@@ -3,9 +3,11 @@ package com.example.hourtracker;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //BigDecimal is used for storing most values as it is the best data type when dealing with currency.
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private DecimalFormat df=new DecimalFormat("0.00");
     private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
     private ArrayList<String> days=new ArrayList<>();//Days worked
+    private ArrayList<BigDecimal> unpaid=new ArrayList<>();
 
 
     public void setHoursInfo(){
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         //Everything after the for-loop is simply there to stop error messages
         hours=new ArrayList<>();
         days=new ArrayList<>();
+        unpaid=new ArrayList<>();
         FileInputStream fis=null;
         try{
             fis=openFileInput(FILE_NAME);
@@ -55,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 sb.append(text);
             }
             String[] rtn=(sb.toString().split(" "));
+            System.out.println(Arrays.toString(rtn));
             for(int n=0;n<rtn.length;n++){
-                if((n+1)%3==0){//days
-                    days.add(rtn[n]);
-                }else{//hours
+                if(n%4<=1){//days
                     hours.add(rtn[n]);
+                }else if(n%4==2){//hours
+                    days.add(rtn[n]);
+                }else{
+                    unpaid.add(new BigDecimal(rtn[n]));
                 }
             }
         }catch(FileNotFoundException e){
@@ -89,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public BigDecimal getTotalHours(ArrayList<String> hours){
+    public BigDecimal getTotalHours(ArrayList<BigDecimal> unpiad){
         //Calculates the total hours from the hours array
         BigDecimal sum=new BigDecimal("0");
-        for(int n=0;n<hours.size()/2;n++){
-            sum=sum.add(timeToHours(hours,n*2));
+        for(int n=0;n<unpiad.size();n++){
+            sum=sum.add(unpiad.get(n));
         }
         return(sum);
     }
@@ -106,22 +114,52 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println(days.toString());
         System.out.println(hours.toString());
+        System.out.println(unpaid.toString());
 
         BigDecimal wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
 
         wageText.setText("Wage:\n$"+df.format(wage));
-        totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
-        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+        totHourText.setText("Total Hours:\n"+getTotalHours(unpaid).toString());
+        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(unpaid).multiply(wage)));
 
-        startHoursText.setText("Start Hours:\n");
+        StringBuilder sText=new StringBuilder("Start Hours:<br>");
+        StringBuilder spText=new StringBuilder("Stop Hours:<br>");
+        StringBuilder hText=new StringBuilder("Hours:<br>");
+        StringBuilder dText=new StringBuilder("Dates:<br>");
+        /*startHoursText.setText("Start Hours:\n");
         stopHoursText.setText("Stop Hours:\n");
         hoursText.setText("Hours:\n");
-        datesText.setText("Dates:\n");
+        datesText.setText("Dates:\n");*/
+
+        String currColor;
         for(int n=2;n<hours.size();n+=2){
-            startHoursText.append(hours.get(n)+"\n");
+            if(unpaid.get(n/2).equals(new BigDecimal("0"))){//Totally paid
+                currColor="green";
+            }else if(unpaid.get(n/2).equals(timeToHours(hours,n))){//Totally unpaid
+                currColor="red";
+            }else{//Partially paid
+                currColor="yellow";
+            }
+
+            sText.append("<font color='").append(currColor).append("'>").append(hours.get(n)).append("</font><br>");
+            spText.append("<font color='").append(currColor).append("'>").append(hours.get(n+1)).append("</font><br>");
+            hText.append("<font color='").append(currColor).append("'>").append(timeToHours(hours,n)).append("</font><br>");
+            dText.append("<font color='").append(currColor).append("'>").append(days.get(n/2)).append("</font><br>");
+            /*startHoursText.append(hours.get(n)+"\n");
             stopHoursText.append(hours.get(n+1)+"\n");
             hoursText.append(timeToHours(hours,n)+"\n");
-            datesText.append(days.get(n/2)+"\n");
+            datesText.append(days.get(n/2)+"\n");*/
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            startHoursText.setText(Html.fromHtml(sText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+            stopHoursText.setText(Html.fromHtml(spText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+            hoursText.setText(Html.fromHtml(hText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+            datesText.setText(Html.fromHtml(dText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+        }else{
+            startHoursText.setText(Html.fromHtml(sText.toString()), TextView.BufferType.SPANNABLE);
+            stopHoursText.setText(Html.fromHtml(spText.toString()), TextView.BufferType.SPANNABLE);
+            hoursText.setText(Html.fromHtml(hText.toString()), TextView.BufferType.SPANNABLE);
+            datesText.setText(Html.fromHtml(dText.toString()), TextView.BufferType.SPANNABLE);
         }
     }
 

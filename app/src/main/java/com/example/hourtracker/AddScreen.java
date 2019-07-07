@@ -11,11 +11,11 @@ import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.math.BigDecimal;
 
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
 
-    //private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
     private EditText wageInput;
@@ -24,6 +24,12 @@ public class AddScreen extends AppCompatActivity {
     private EditText dateInput;
 
     private Context context=this;
+
+    public BigDecimal timeToHours(String start,String stop){
+        BigDecimal main = BigDecimal.valueOf(Integer.parseInt(stop.substring(0, 2)) - Integer.parseInt(start.substring(0, 2)));
+        BigDecimal remain = BigDecimal.valueOf((Integer.parseInt(stop.substring(3, 5)) - Integer.parseInt(start.substring(3, 5))) / 60.0);
+        return(main.add(remain));
+    }
 
     public void appendHours(String add){
         String filePath=context.getFilesDir().getPath()+"/"+FILE_NAME;
@@ -45,9 +51,9 @@ public class AddScreen extends AppCompatActivity {
             hour=hour.substring(0,2)+":"+hour.substring(2);
         }
         if(Integer.parseInt(hour.substring(0,2))<8){//Time is in PM form
-            return(Integer.parseInt(hour.substring(0,2))+12+hour.substring(2)+" ");
+            return(Integer.parseInt(hour.substring(0,2))+12+hour.substring(2));
         }else{
-            return(hour+" ");
+            return(hour);
         }
     }
 
@@ -70,9 +76,13 @@ public class AddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String rtn="";
-                rtn+=correctHour(startTimeInput.getText().toString());
-                rtn+=correctHour(stopTimeInput.getText().toString());
+                String startH=correctHour(startTimeInput.getText().toString());
+                String stopH=correctHour(stopTimeInput.getText().toString());
+                System.out.println(startH+"\n"+stopH);
+                rtn+=startH+" ";
+                rtn+=stopH+" ";
                 rtn+=dateInput.getText().toString()+" ";
+                rtn+=timeToHours(startH,stopH)+" ";
 
                 startTimeInput.getText().clear();
                 stopTimeInput.getText().clear();
