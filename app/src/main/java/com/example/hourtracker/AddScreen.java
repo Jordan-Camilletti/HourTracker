@@ -27,7 +27,7 @@ public class AddScreen extends AppCompatActivity {
 
     public BigDecimal timeToHours(String start,String stop){
         BigDecimal main = BigDecimal.valueOf(Integer.parseInt(stop.substring(0, 2)) - Integer.parseInt(start.substring(0, 2)));
-        BigDecimal remain = BigDecimal.valueOf((Integer.parseInt(stop.substring(3)) - Integer.parseInt(start.substring(3))) / 60.0);
+        BigDecimal remain = BigDecimal.valueOf((Integer.parseInt(stop.substring(3, 5)) - Integer.parseInt(start.substring(3, 5))) / 60.0);
         return(main.add(remain));
     }
 
@@ -51,7 +51,7 @@ public class AddScreen extends AppCompatActivity {
             hour=hour.substring(0,2)+":"+hour.substring(2);
         }
         if(Integer.parseInt(hour.substring(0,2))<8){//Time is in PM form
-            return(Integer.parseInt(hour.substring(0,2))+12+hour.substring(2)+" ");
+            return(Integer.parseInt(hour.substring(0,2))+12+hour.substring(2));
         }else{
             return(hour);
         }
@@ -78,6 +78,7 @@ public class AddScreen extends AppCompatActivity {
                 String rtn="";
                 String startH=correctHour(startTimeInput.getText().toString());
                 String stopH=correctHour(stopTimeInput.getText().toString());
+                System.out.println(startH+"\n"+stopH);
                 rtn+=startH+" ";
                 rtn+=stopH+" ";
                 rtn+=dateInput.getText().toString()+" ";
