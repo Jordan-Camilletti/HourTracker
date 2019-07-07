@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class RemoveScreen extends AppCompatActivity {
     private EditText paidInput;
-    private TextView leftover;
 
     private SharedPreferences mPreferences;
     private MainActivity mainAc=new MainActivity();//Used to reference methods from MainActivity
