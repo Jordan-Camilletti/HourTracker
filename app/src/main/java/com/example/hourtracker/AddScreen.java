@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 public class AddScreen extends AppCompatActivity {
     private static final String FILE_NAME="hours.txt";
 
-    //private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
     private EditText wageInput;
@@ -78,7 +77,7 @@ public class AddScreen extends AppCompatActivity {
             public void onClick(View v) {
                 String rtn="";
                 String startH=correctHour(startTimeInput.getText().toString());
-                String stopH=correctHour(stopTimeInput.getText().toString());;
+                String stopH=correctHour(stopTimeInput.getText().toString());
                 rtn+=startH+" ";
                 rtn+=stopH+" ";
                 rtn+=dateInput.getText().toString()+" ";

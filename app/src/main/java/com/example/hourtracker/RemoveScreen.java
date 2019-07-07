@@ -51,7 +51,7 @@ public class RemoveScreen extends AppCompatActivity {
         try {
             FileOutputStream fos= openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             if(reset){
-                fos.write("00:00 00:00 0000-00-00 ".getBytes());
+                fos.write("00:00 00:00 0000-00-00 0.0".getBytes());
             }else {
                 fos.write(arrsToString(hours, days).getBytes());
             }

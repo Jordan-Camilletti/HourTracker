@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private DecimalFormat df=new DecimalFormat("0.00");
     private ArrayList<String> hours=new ArrayList<>();//Hours worked per day
     private ArrayList<String> days=new ArrayList<>();//Days worked
+    private ArrayList<BigDecimal> unpaid=new ArrayList<>();
 
 
     public void setHoursInfo(){
@@ -56,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
             }
             String[] rtn=(sb.toString().split(" "));
             for(int n=0;n<rtn.length;n++){
-                if((n+1)%3==0){//days
-                    days.add(rtn[n]);
-                }else{//hours
+                if(n%4<=1){//days
                     hours.add(rtn[n]);
+                }else if(n%4==2){//hours
+                    days.add(rtn[n]);
+                }else{
+                    unpaid.add(new BigDecimal(rtn[n]));
                 }
             }
         }catch(FileNotFoundException e){
@@ -89,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public BigDecimal getTotalHours(ArrayList<String> hours){
+    public BigDecimal getTotalHours(ArrayList<BigDecimal> unpiad){
         //Calculates the total hours from the hours array
         BigDecimal sum=new BigDecimal("0");
-        for(int n=0;n<hours.size()/2;n++){
-            sum=sum.add(timeToHours(hours,n*2));
+        for(int n=0;n<unpiad.size();n++){
+            sum=sum.add(unpiad.get(n));
         }
         return(sum);
     }
@@ -106,12 +109,13 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println(days.toString());
         System.out.println(hours.toString());
+        System.out.println(unpaid.toString());
 
         BigDecimal wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
 
         wageText.setText("Wage:\n$"+df.format(wage));
-        totHourText.setText("Total Hours:\n"+getTotalHours(hours).toString());
-        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(hours).multiply(wage)));
+        totHourText.setText("Total Hours:\n"+getTotalHours(unpaid).toString());
+        totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(unpaid).multiply(wage)));
 
         startHoursText.setText("Start Hours:\n");
         stopHoursText.setText("Stop Hours:\n");
