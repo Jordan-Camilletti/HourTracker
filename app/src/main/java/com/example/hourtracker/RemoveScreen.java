@@ -27,6 +27,7 @@ public class RemoveScreen extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private MainActivity mainAc=new MainActivity();//Used to reference methods from MainActivity
 
+    private BigDecimal compareZero=new BigDecimal("0.0");
     private BigDecimal hoursPaid=new BigDecimal("0.0");
     private BigDecimal wage=new BigDecimal("12.50");
     private String FILE_NAME="hours.txt";
@@ -103,6 +104,13 @@ public class RemoveScreen extends AppCompatActivity {
         }
     }
 
+    public BigDecimal minDec(BigDecimal n1, BigDecimal n2){
+        if(n1.compareTo(n2)>0){
+            return(n2);
+        }
+        return(n1);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
@@ -111,7 +119,6 @@ public class RemoveScreen extends AppCompatActivity {
         Button clearAllButton = findViewById(R.id.clearAllButton);
         Button removeButton = findViewById(R.id.removeButton);
         paidInput = findViewById(R.id.paidInput);
-        leftover = findViewById(R.id.leftover);
 
         mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -142,12 +149,9 @@ public class RemoveScreen extends AppCompatActivity {
                 //Removes a date if it's total hours is less than the current owed
                 //If there's any hours owed left after all dates are checked then the left is displayed as leftover hours
                 for(int n=2;n<hours.size();n+=2){
-                    if(unpaid.get(n/2).compareTo(new BigDecimal("0.0"))>0){
-                        if(unpaid.get(n/2).compareTo(hoursPaid)==0){
-
-                        }else{
-
-                        }
+                    if(unpaid.get(n/2).compareTo(compareZero)>0 && hoursPaid.compareTo(compareZero)>0){
+                        unpaid.set(n/2,unpaid.get(n/2).subtract(minDec(unpaid.get(n/2),hoursPaid)));
+                        hoursPaid=hoursPaid.subtract(minDec(unpaid.get(n/2),hoursPaid));
                     }
                     /*if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)<=0){
                         hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
