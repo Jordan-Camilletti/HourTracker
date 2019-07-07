@@ -145,14 +145,17 @@ public class RemoveScreen extends AppCompatActivity {
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
                 hoursPaid=new BigDecimal(paidInput.getText().toString());
                 hoursPaid=hoursPaid.divide(wage, RoundingMode.CEILING);//Calculating hours owed via the wage and $ owed
-                System.out.println(hoursPaid);
+                BigDecimal smallestDec;
+
                 //Removes a date if it's total hours is less than the current owed
                 //If there's any hours owed left after all dates are checked then the left is displayed as leftover hours
-                for(int n=2;n<hours.size();n+=2){
-                    if(unpaid.get(n/2).compareTo(compareZero)>0 && hoursPaid.compareTo(compareZero)>0){
-                        unpaid.set(n/2,unpaid.get(n/2).subtract(minDec(unpaid.get(n/2),hoursPaid)));
-                        hoursPaid=hoursPaid.subtract(minDec(unpaid.get(n/2),hoursPaid));
+                for(int n=1;n<unpaid.size();n++){
+                    if(unpaid.get(n).compareTo(compareZero)>0 && hoursPaid.compareTo(compareZero)>0){
+                        smallestDec=minDec(unpaid.get(n),hoursPaid);
+                        unpaid.set(n,unpaid.get(n).subtract(smallestDec));
+                        hoursPaid=hoursPaid.subtract(smallestDec);
                     }
+                    System.out.println("U:"+unpaid.get(n)+"\nH:"+hoursPaid);
                     /*if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)<=0){
                         hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
                         days.remove(n/2);

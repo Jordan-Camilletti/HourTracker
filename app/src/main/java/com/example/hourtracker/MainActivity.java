@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         String currColor;
         for(int n=2;n<hours.size();n+=2){
-            if(unpaid.get(n/2).equals(new BigDecimal("0"))){//Totally paid
+            if(unpaid.get(n/2).equals(new BigDecimal("0.0"))){//Totally paid
                 currColor="green";
             }else if(unpaid.get(n/2).equals(timeToHours(hours,n))){//Totally unpaid
                 currColor="red";
