@@ -130,7 +130,7 @@ public class RemoveScreen extends AppCompatActivity {
         removeButton.setOnClickListener(new View.OnClickListener(){
             @SuppressLint("SetTextI18n")
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//TODO: update this to work with the new unpaid feature
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
                 hoursPaid=new BigDecimal(paidInput.getText().toString());
                 hoursPaid=hoursPaid.divide(wage, RoundingMode.CEILING);//Calculating hours owed via the wage and $ owed
