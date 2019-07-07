@@ -3,9 +3,11 @@ package com.example.hourtracker;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -120,27 +122,44 @@ public class MainActivity extends AppCompatActivity {
         totHourText.setText("Total Hours:\n"+getTotalHours(unpaid).toString());
         totOwedText.setText("Total Owed:\n$"+df.format(getTotalHours(unpaid).multiply(wage)));
 
-        startHoursText.setText("Start Hours:\n");
+        StringBuilder sText=new StringBuilder("Start Hours:<br>");
+        StringBuilder spText=new StringBuilder("Stop Hours:<br>");
+        StringBuilder hText=new StringBuilder("Hours:<br>");
+        StringBuilder dText=new StringBuilder("Dates:<br>");
+        /*startHoursText.setText("Start Hours:\n");
         stopHoursText.setText("Stop Hours:\n");
         hoursText.setText("Hours:\n");
-        datesText.setText("Dates:\n");
+        datesText.setText("Dates:\n");*/
+
+        String currColor;
         for(int n=2;n<hours.size();n+=2){
             if(unpaid.get(n/2).equals(new BigDecimal("0"))){//Totally paid
-                startHoursText.append(hours.get(n)+"\n");
-                stopHoursText.append(hours.get(n+1)+"\n");
-                hoursText.append(timeToHours(hours,n)+"\n");
-                datesText.append(days.get(n/2)+"\n");
+                currColor="green";
             }else if(unpaid.get(n/2).equals(timeToHours(hours,n))){//Totally unpaid
-                startHoursText.append(hours.get(n)+"\n");
-                stopHoursText.append(hours.get(n+1)+"\n");
-                hoursText.append(timeToHours(hours,n)+"\n");
-                datesText.append(days.get(n/2)+"\n");
+                currColor="red";
             }else{//Partially paid
-                startHoursText.append(hours.get(n)+"\n");
-                stopHoursText.append(hours.get(n+1)+"\n");
-                hoursText.append(timeToHours(hours,n)+"\n");
-                datesText.append(days.get(n/2)+"\n");
+                currColor="yellow";
             }
+
+            sText.append("<font color='").append(currColor).append("'>").append(hours.get(n)).append("</font><br>");
+            spText.append("<font color='").append(currColor).append("'>").append(hours.get(n+1)).append("</font><br>");
+            hText.append("<font color='").append(currColor).append("'>").append(timeToHours(hours,n)).append("</font><br>");
+            dText.append("<font color='").append(currColor).append("'>").append(days.get(n/2)).append("</font><br>");
+            /*startHoursText.append(hours.get(n)+"\n");
+            stopHoursText.append(hours.get(n+1)+"\n");
+            hoursText.append(timeToHours(hours,n)+"\n");
+            datesText.append(days.get(n/2)+"\n");*/
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            startHoursText.setText(Html.fromHtml(sText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+            stopHoursText.setText(Html.fromHtml(spText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+            hoursText.setText(Html.fromHtml(hText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+            datesText.setText(Html.fromHtml(dText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+        }else{
+            startHoursText.setText(Html.fromHtml(sText.toString()), TextView.BufferType.SPANNABLE);
+            stopHoursText.setText(Html.fromHtml(spText.toString()), TextView.BufferType.SPANNABLE);
+            hoursText.setText(Html.fromHtml(hText.toString()), TextView.BufferType.SPANNABLE);
+            datesText.setText(Html.fromHtml(dText.toString()), TextView.BufferType.SPANNABLE);
         }
     }
 
