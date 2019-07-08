@@ -24,7 +24,6 @@ public class RemoveScreen extends AppCompatActivity {
     private EditText paidInput;
 
     private SharedPreferences mPreferences;
-    private MainActivity mainAc=new MainActivity();//Used to reference methods from MainActivity
 
     private BigDecimal compareZero=new BigDecimal("0.0");
     private BigDecimal hoursPaid=new BigDecimal("0.0");
