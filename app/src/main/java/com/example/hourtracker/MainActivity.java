@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -134,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
 
         String currColor;
         for(int n=2;n<hours.size();n+=2){
-            if(unpaid.get(n/2).intValueExact()==0){//Totally paid
-                currColor="green";
+            if(unpaid.get(n/2).round(new MathContext(1)).intValueExact()==0){//Totally paid
+                currColor="#2AD316";//green
             }else if(unpaid.get(n/2).equals(timeToHours(hours,n))){//Totally unpaid
-                currColor="red";
+                currColor="#CE3010";//red
             }else{//Partially paid
-                currColor="yellow";
+                currColor="#CCCC0B";//yellow
             }
 
             sText.append("<font color='").append(currColor).append("'>").append(hours.get(n)).append("</font><br>");
