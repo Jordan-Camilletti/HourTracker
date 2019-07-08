@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -25,8 +24,8 @@ public class RemoveScreen extends AppCompatActivity {
     private EditText paidInput;
 
     private SharedPreferences mPreferences;
-    private MainActivity mainAc=new MainActivity();//Used to reference methods from MainActivity
 
+    private BigDecimal compareZero=new BigDecimal("0.0");
     private BigDecimal hoursPaid=new BigDecimal("0.0");
     private BigDecimal wage=new BigDecimal("12.50");
     private String FILE_NAME="hours.txt";
@@ -103,6 +102,13 @@ public class RemoveScreen extends AppCompatActivity {
         }
     }
 
+    public BigDecimal minDec(BigDecimal n1, BigDecimal n2){
+        if(n1.compareTo(n2)>0){
+            return(n2);
+        }
+        return(n1);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove);
@@ -111,7 +117,6 @@ public class RemoveScreen extends AppCompatActivity {
         Button clearAllButton = findViewById(R.id.clearAllButton);
         Button removeButton = findViewById(R.id.removeButton);
         paidInput = findViewById(R.id.paidInput);
-        leftover = findViewById(R.id.leftover);
 
         mPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -138,17 +143,17 @@ public class RemoveScreen extends AppCompatActivity {
                 wage=new BigDecimal(mPreferences.getString("Wage","12.50"));
                 hoursPaid=new BigDecimal(paidInput.getText().toString());
                 hoursPaid=hoursPaid.divide(wage, RoundingMode.CEILING);//Calculating hours owed via the wage and $ owed
-                System.out.println(hoursPaid);
+                BigDecimal smallestDec;
+
                 //Removes a date if it's total hours is less than the current owed
                 //If there's any hours owed left after all dates are checked then the left is displayed as leftover hours
-                for(int n=2;n<hours.size();n+=2){
-                    if(unpaid.get(n/2).compareTo(new BigDecimal("0.0"))>0){
-                        if(unpaid.get(n/2).compareTo(hoursPaid)==0){
-
-                        }else{
-
-                        }
+                for(int n=1;n<unpaid.size();n++){
+                    if(unpaid.get(n).compareTo(compareZero)>0 && hoursPaid.compareTo(compareZero)>0){
+                        smallestDec=minDec(unpaid.get(n),hoursPaid);
+                        unpaid.set(n,unpaid.get(n).subtract(smallestDec));
+                        hoursPaid=hoursPaid.subtract(smallestDec);
                     }
+                    System.out.println("U:"+unpaid.get(n)+"\nH:"+hoursPaid);
                     /*if(mainAc.timeToHours(hours,n).compareTo(hoursPaid)<=0){
                         hoursPaid=hoursPaid.subtract(mainAc.timeToHours(hours,n));
                         days.remove(n/2);

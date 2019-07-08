@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.text.HtmlCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
         String currColor;
         for(int n=2;n<hours.size();n+=2){
-            if(unpaid.get(n/2).equals(new BigDecimal("0"))){//Totally paid
+            if(unpaid.get(n/2).intValueExact()==0){//Totally paid
                 currColor="green";
             }else if(unpaid.get(n/2).equals(timeToHours(hours,n))){//Totally unpaid
                 currColor="red";
@@ -156,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
             hoursText.setText(Html.fromHtml(hText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
             datesText.setText(Html.fromHtml(dText.toString(),  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
         }else{
-            startHoursText.setText(Html.fromHtml(sText.toString()), TextView.BufferType.SPANNABLE);
-            stopHoursText.setText(Html.fromHtml(spText.toString()), TextView.BufferType.SPANNABLE);
-            hoursText.setText(Html.fromHtml(hText.toString()), TextView.BufferType.SPANNABLE);
-            datesText.setText(Html.fromHtml(dText.toString()), TextView.BufferType.SPANNABLE);
+            startHoursText.setText(HtmlCompat.fromHtml(sText.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+            stopHoursText.setText(HtmlCompat.fromHtml(spText.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+            hoursText.setText(HtmlCompat.fromHtml(hText.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+            datesText.setText(HtmlCompat.fromHtml(dText.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY));
         }
     }
 
